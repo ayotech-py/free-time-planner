@@ -54,8 +54,9 @@ class ProfileView extends StatelessWidget {
                     height: 24.0,
                   ),
                   const Avatar.largest(
-                      url:
-                          'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+                    url:
+                        'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                  ),
                   const SizedBox(
                     height: 8.0,
                   ),

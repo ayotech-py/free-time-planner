@@ -5,9 +5,14 @@ import 'package:free_time_planner/features/recommendation_details/recommendation
 import 'package:free_time_planner/onboarding/Intro_screen/intro_screen_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   /*if (!kIsWeb) {
     await Firebase.initializeApp();
   }*/
