@@ -148,7 +148,7 @@ class LoginView extends StatelessWidget {
                               const EdgeInsets.only(top: 24.0, bottom: 24.0),
                           color: AppColors.primaryColor,
                           onPressed: () {
-                            Get.to(() => const BottomNavigationView());
+                            controller.onLogin(context);
                           },
                           elevation: 0,
                           radius: 10,

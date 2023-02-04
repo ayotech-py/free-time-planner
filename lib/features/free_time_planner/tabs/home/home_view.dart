@@ -85,37 +85,37 @@ class HomeView extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Hodels & Accommodation',
+                                  text: 'Hodels',
                                 ),
                               ),
                               SizedBox(
                                 width: 120,
                                 child: Padding(
                                   padding: EdgeInsets.all(4.0),
-                                  child: Tab(text: 'Food & Drinks'),
+                                  child: Tab(text: 'Resturants'),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Experience',
+                                  text: 'Cinemas',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Service',
+                                  text: 'Malls',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Product',
+                                  text: 'Museuns',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
-                                child: Tab(text: 'Hit List'),
+                                child: Tab(text: 'Favorites'),
                               ),
                             ],
                           ),

@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:free_time_planner/components/avatar.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_detail_controller.dart';
 import 'package:free_time_planner/routes/exports.dart';
@@ -105,12 +103,12 @@ class RecommendationDetailView extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: const [
                               AppText(
-                                'Charles Marcus',
+                                'Free Time Planner',
                                 fontWeight: FontWeight.w600,
                                 size: 16,
                               ),
                               AppText(
-                                '21 Feb. 2021',
+                                '19 Jan. 2023',
                                 size: 14,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
