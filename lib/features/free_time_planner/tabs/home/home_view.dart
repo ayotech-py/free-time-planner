@@ -35,21 +35,21 @@ class HomeView extends StatelessWidget {
                       right: 16.0,
                     ),
                     child: Row(
-                      children: const [
-                        Avatar.large(
+                      children: [
+                        const Avatar.large(
                             url:
                                 'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
-                        SizedBox(
+                        const SizedBox(
                           width: 8.0,
                         ),
                         Expanded(
                           child: AppText(
-                            'Charles',
+                            controller.userData.fullName ?? 'Free Time Planner',
                             size: 20,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Icon(Icons.settings)
+                        const Icon(Icons.settings)
                       ],
                     ),
                   ),

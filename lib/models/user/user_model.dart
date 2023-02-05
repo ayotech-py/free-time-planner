@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String fullName;
-  final String location;
-  final String age;
-  final String email;
-  final String passWord;
-  final String avatar;
+  final String? fullName;
+  final String? location;
+  final String? age;
+  final String? email;
+  final String? passWord;
+  final String? avatar;
 
   UserModel({
-    required this.fullName,
-    required this.location,
-    required this.age,
-    required this.email,
-    required this.passWord,
-    required this.avatar,
+    this.fullName,
+    this.location,
+    this.age,
+    this.email,
+    this.passWord,
+    this.avatar,
   });
 
   factory UserModel.fromFirestore(DocumentSnapshot map) {

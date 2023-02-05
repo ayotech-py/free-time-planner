@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
 import 'package:free_time_planner/onboarding/Intro_screen/intro_screen_view.dart';
+import 'package:free_time_planner/onboarding/splash_screen/splash_screen_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.openSansTextTheme(Theme.of(context).textTheme),
       ),
-      home: const IntroScreenView(),
+      home: const SplashScreenView(),
       //getPages: RoutesClass.routes,
     );
   }

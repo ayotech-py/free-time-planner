@@ -60,8 +60,8 @@ class ProfileView extends StatelessWidget {
                   const SizedBox(
                     height: 8.0,
                   ),
-                  const AppText(
-                    'Charles Marcus',
+                  AppText(
+                    controller.userData.fullName ?? 'Free Time Planner',
                     size: 20,
                     fontWeight: FontWeight.w600,
                   ),
