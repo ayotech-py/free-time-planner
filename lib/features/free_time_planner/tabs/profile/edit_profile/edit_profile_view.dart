@@ -83,13 +83,13 @@ class EditProfileView extends StatelessWidget {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  textAndTextField(
-                      controller: controller.addresscontroller,
-                      formName: 'Enter your address',
-                      hintText: 'Quebec, Canada'),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
+                  /* textAndTextField(
+                        controller: controller.addresscontroller,
+                        formName: 'Enter your address',
+                        hintText: 'Quebec, Canada'),
+                    const SizedBox(
+                      height: 16.0,
+                    ),*/
                   textAndTextField(
                       controller: controller.biocontroller,
                       formName: 'Enter your bio',
@@ -104,14 +104,21 @@ class EditProfileView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 24.0, bottom: 24.0),
                     color: AppColors.primaryColor,
                     onPressed: () {
-                      //controller.onSignup(context);
+                      controller.onUpdate();
                     },
                     elevation: 0,
                     radius: 10,
-                    child: const AppText(
-                      'Update Profile',
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    child: Visibility(
+                      visible: !controller.inProgress,
+                      replacement: const CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                      child: const AppText(
+                        'Update Profile',
+                        color: Colors.white,
+                        size: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
