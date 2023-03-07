@@ -73,6 +73,14 @@ class EditProfileController extends GetxController {
         Get.back();
         inProgress = false;
         update();
+        Get.snackbar(
+          "Success",
+          'Profile Updated',
+          dismissDirection: DismissDirection.horizontal,
+          colorText: Colors.white,
+          backgroundColor: Colors.black,
+          snackPosition: SnackPosition.TOP,
+        );
       } on Exception catch (e) {
         Get.snackbar(
           "Error",
@@ -82,9 +90,9 @@ class EditProfileController extends GetxController {
           backgroundColor: Colors.red,
           snackPosition: SnackPosition.TOP,
         );
+        inProgress = false;
+        update();
       }
-      inProgress = false;
-      update();
     }
   }
   //final _picker = ImagePicker();
