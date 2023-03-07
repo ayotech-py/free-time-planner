@@ -71,10 +71,10 @@ class ProfileView extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.location_on),
                       AppText(
-                        'Toronto, Canada',
+                        controller.userData.location ?? 'Toronto, Canada',
                         size: 16,
                         fontWeight: FontWeight.w600,
                       ),

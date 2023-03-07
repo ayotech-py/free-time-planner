@@ -31,6 +31,20 @@ class UserAuth {
     });
   }
 
+  ///Registering with Email is done here in this function. Passing the required parameter will sign user up in the application.
+  Future<void> updateProfile({
+    required String bio,
+    required String fullName,
+  }) async {
+    await _firestore
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'fullName': fullName,
+      'bio': bio,
+    });
+  }
+
   /// User can login with Email and password by providing the email and pass word that have already been created.
   Future<UserCredential?> loginWithEmailAndPass({
     required String email,

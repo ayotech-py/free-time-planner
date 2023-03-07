@@ -4,6 +4,7 @@ class UserModel {
   final String? fullName;
   final String? location;
   final String? age;
+  final String? bio;
   final String? email;
   final String? passWord;
   final String? avatar;
@@ -15,10 +16,12 @@ class UserModel {
     this.email,
     this.passWord,
     this.avatar,
+    this.bio,
   });
 
   factory UserModel.fromFirestore(DocumentSnapshot map) {
     return UserModel(
+      bio: map['bio'],
       location: map['location'],
       avatar: map['avatar'],
       email: map['email'],

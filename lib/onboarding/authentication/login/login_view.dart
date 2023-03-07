@@ -152,10 +152,17 @@ class LoginView extends StatelessWidget {
                           },
                           elevation: 0,
                           radius: 10,
-                          child: const AppText(
-                            'Sign In',
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                          child: Visibility(
+                            visible: !controller.inProgress,
+                            replacement: const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            child: const AppText(
+                              'Login',
+                              color: Colors.white,
+                              size: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         const SizedBox(

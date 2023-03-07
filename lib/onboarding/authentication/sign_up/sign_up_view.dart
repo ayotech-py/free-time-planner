@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dart';
+import 'package:free_time_planner/onboarding/authentication/login/login_view.dart';
 import 'package:free_time_planner/onboarding/authentication/sign_up/sign_up_viewmodel.dart';
 import 'package:free_time_planner/routes/exports.dart';
 
@@ -14,45 +15,47 @@ class SignUpView extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
-            top: true,
-            bottom: true,
-            child: SingleChildScrollView(
-              child: Column(
+              top: true,
+              bottom: true,
+              child: Stack(
                 children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: double.infinity,
-                    child: SizedBox.fromSize(
-                      //size: const Size.fromRadius(48), // Image radius
-                      child: Image.asset(
-                        AppAssets.intro2,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Center(
-                    child: AppText(
-                      'Sign Up',
-                      size: 25,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Center(
-                    child: AppText(
-                      'Create a new account and coonect with thousands of users',
-                      alignment: TextAlign.center,
-                      size: 16,
-                    ),
-                  ),
-                  /*const SizedBox(
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: double.infinity,
+                          child: SizedBox.fromSize(
+                            //size: const Size.fromRadius(48), // Image radius
+                            child: Image.asset(
+                              AppAssets.intro2,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Center(
+                          child: AppText(
+                            'Sign Up',
+                            size: 25,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const Center(
+                          child: AppText(
+                            'Create a new account and coonect with thousands of users',
+                            alignment: TextAlign.center,
+                            size: 16,
+                          ),
+                        ),
+                        /*const SizedBox(
                   height: 20,
                 ),
                 const Center(
@@ -225,134 +228,137 @@ class SignUpView extends StatelessWidget {
                     ],
                   ),
                 ),*/
-                  Stepper(
-                    type: StepperType.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    currentStep: controller.currentStep,
-                    onStepTapped: (step) => controller.tapped(step),
-                    onStepContinue: controller.continued,
-                    onStepCancel: controller.cancel,
-                    steps: <Step>[
-                      Step(
-                        title: const Text('Account'),
-                        content: Column(
-                          children: <Widget>[
-                            //Email TextField
-                            textAndTextField(
-                              controller: controller.emailController,
-                              formName: 'Email Address',
-                              hintText: 'wabais@example.com',
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
+                        Stepper(
+                          type: StepperType.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
+                          currentStep: controller.currentStep,
+                          onStepTapped: (step) => controller.tapped(step),
+                          onStepContinue: controller.continued,
+                          onStepCancel: controller.cancel,
+                          steps: <Step>[
+                            Step(
+                              title: const Text('Account'),
+                              content: Column(
+                                children: <Widget>[
+                                  //Email TextField
+                                  textAndTextField(
+                                    controller: controller.emailController,
+                                    formName: 'Email Address',
+                                    hintText: 'wabais@example.com',
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
 
-                            ///PassWord TextFields
-                            textAndPasswordTextField(
-                              controller: controller.passController,
-                              formName: 'Password',
-                              show: controller.showPass,
-                              onShow: () {
-                                controller.onObscurePass();
-                              },
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-
-                            ///ConfirmPassWord TextFields
-                            textAndPasswordTextField(
-                              controller: controller.confirmPassController,
-                              formName: 'Confirm Password',
-                              show: controller.showConfirmPass,
-                              onShow: () {
-                                controller.onObscureConfirmPass();
-                              },
-                            ),
-                          ],
-                        ),
-                        isActive: controller.currentStep >= 0,
-                        state: controller.currentStep >= 0
-                            ? StepState.complete
-                            : StepState.disabled,
-                      ),
-                      Step(
-                        title: const Text('About'),
-                        content: Column(
-                          children: <Widget>[
-                            //fullName TextField
-                            textAndTextField(
-                              controller: controller.fullNameController,
-                              formName: ' Full Name',
-                              hintText: 'Jeo John',
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            //fullName TextField
-                            textAndTextField(
-                              controller: controller.ageController,
-                              formName: 'Age',
-                              hintText: '12',
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-
-                            ///Ter
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 0.0),
-                                  child: Checkbox(
-                                    splashRadius: 10,
-                                    activeColor: AppColors.primaryColor,
-                                    value: controller.terms,
-                                    onChanged: (val) {
-                                      controller.onTermAccept(val!);
+                                  ///PassWord TextFields
+                                  textAndPasswordTextField(
+                                    controller: controller.passController,
+                                    formName: 'Password',
+                                    show: controller.showPass,
+                                    onShow: () {
+                                      controller.onObscurePass();
                                     },
                                   ),
-                                ),
-                                const AppText(
-                                  'I accept the',
-                                  size: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      //Get.toNamed(RoutesClass.getLoginRoute());
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+
+                                  ///ConfirmPassWord TextFields
+                                  textAndPasswordTextField(
+                                    controller:
+                                        controller.confirmPassController,
+                                    formName: 'Confirm Password',
+                                    show: controller.showConfirmPass,
+                                    onShow: () {
+                                      controller.onObscureConfirmPass();
                                     },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 16.0),
-                                      child: AppText(
-                                        ' Terms of Service and Privacy Policy',
-                                        size: 14,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.w600,
+                                  ),
+                                ],
+                              ),
+                              isActive: controller.currentStep >= 0,
+                              state: controller.currentStep >= 0
+                                  ? StepState.complete
+                                  : StepState.disabled,
+                            ),
+                            Step(
+                              title: const Text('About'),
+                              content: Column(
+                                children: <Widget>[
+                                  //fullName TextField
+                                  textAndTextField(
+                                    controller: controller.fullNameController,
+                                    formName: ' Full Name',
+                                    hintText: 'Jeo John',
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  //fullName TextField
+                                  textAndTextField(
+                                    controller: controller.ageController,
+                                    formName: 'Age',
+                                    hintText: '12',
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+
+                                  ///Ter
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 0.0),
+                                        child: Checkbox(
+                                          splashRadius: 10,
+                                          activeColor: AppColors.primaryColor,
+                                          value: controller.terms,
+                                          onChanged: (val) {
+                                            controller.onTermAccept(val!);
+                                          },
+                                        ),
                                       ),
-                                    ),
+                                      const AppText(
+                                        'I accept the',
+                                        size: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            //Get.toNamed(RoutesClass.getLoginRoute());
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 16.0),
+                                            child: AppText(
+                                              ' Terms of Service and Privacy Policy',
+                                              size: 14,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              color: AppColors.primaryColor,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
 
-                            const SizedBox(
-                              height: 5,
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              ),
+                              isActive: controller.currentStep >= 0,
+                              state: controller.currentStep >= 1
+                                  ? StepState.complete
+                                  : StepState.disabled,
                             ),
-                          ],
-                        ),
-                        isActive: controller.currentStep >= 0,
-                        state: controller.currentStep >= 1
-                            ? StepState.complete
-                            : StepState.disabled,
-                      ),
-                      /*Step(
+                            /*Step(
                         title: new Text('Mobile Number'),
                         content: Column(
                           children: <Widget>[
@@ -367,44 +373,66 @@ class SignUpView extends StatelessWidget {
                             ? StepState.complete
                             : StepState.disabled,
                       ),*/
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
 
-                  ///Sign Up
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const AppText(
-                        'Have An Account?',
-                        size: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: AppText(
-                            'Sign In',
-                            size: 15,
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w600,
+                        ///Sign Up
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const AppText(
+                              'Have An Account?',
+                              size: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => const LoginView());
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, right: 10.0),
+                                child: AppText(
+                                  'Sign In',
+                                  size: 15,
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0.0,
+                    top: 0.0,
+                    right: 0.0,
+                    left: 0.0,
+                    child: Visibility(
+                      visible: controller.inProgress,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black45,
+                        ),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 24,
+                    ),
                   ),
                 ],
-              ),
-            ),
-          ),
+              )),
         );
       },
     );

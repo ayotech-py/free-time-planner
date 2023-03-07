@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/user_service/user_auth.dart';
+
+import '../../../../../models/user/user_model.dart';
 
 class EditProfileController extends GetxController {
   TextEditingController namecontroller = TextEditingController();
@@ -8,6 +11,70 @@ class EditProfileController extends GetxController {
   TextEditingController addresscontroller = TextEditingController();
 
   File? pickedImage;
+
+  UserModel userData = UserModel();
+  UserAuth userAuth = UserAuth();
+  bool inProgress = false;
+
+  @override
+  void onInit() async {
+    //await Future.delayed(Duration(seconds: 2));
+    await user();
+    update();
+    super.onInit();
+  }
+
+  Future<void> user() async {
+    final userinfo = await userAuth.getUserData();
+
+    userData = UserModel(
+      avatar: userinfo['avatar'],
+      email: userinfo['email'],
+      fullName: userinfo['fullName'],
+      passWord: userinfo['passWord'],
+      age: userinfo['age'],
+      bio: userinfo['bio'] ?? '',
+      location: userinfo['location'],
+    );
+    namecontroller.text = userData.fullName ?? "";
+    biocontroller.text = userData.bio ?? "";
+    update();
+  }
+
+  void onUpdate() async {
+    if (biocontroller.text.isEmpty) {
+      Get.snackbar(
+        "Error",
+        'Bio cannot be empty',
+        dismissDirection: DismissDirection.horizontal,
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.TOP,
+      );
+    } else {
+      try {
+        inProgress = true;
+        update();
+        await userAuth.updateProfile(
+            bio: biocontroller.text, fullName: namecontroller.text);
+        Get.back();
+        inProgress = false;
+        update();
+      } on Exception catch (e) {
+        Get.snackbar(
+          "Error",
+          e.toString(),
+          dismissDirection: DismissDirection.horizontal,
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          snackPosition: SnackPosition.TOP,
+        );
+      }
+      Get.back();
+      inProgress = false;
+      update();
+    }
+  }
   //final _picker = ImagePicker();
   //final _fireStorage = FirebaseStorage.instance;
 

@@ -20,12 +20,12 @@ void main() async {
 
   runApp(
     //
-    /*DevicePreview(
+    DevicePreview(
       enabled: !kReleaseMode,
       builder: (context) => const MyApp(), // Wrap your app
-    ),*/
+    ),
 
-    const MyApp(),
+    //const MyApp(),
   );
 
   //
