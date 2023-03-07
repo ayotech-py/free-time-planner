@@ -49,7 +49,14 @@ class HomeView extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const Icon(Icons.settings)
+                        IconButton(
+                          onPressed: () async {
+                            await controller.logOut();
+                          },
+                          icon: const Icon(
+                            Icons.exit_to_app,
+                          ),
+                        )
                       ],
                     ),
                   ),

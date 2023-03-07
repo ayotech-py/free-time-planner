@@ -8,7 +8,9 @@ import '../../../../../models/user/user_model.dart';
 class EditProfileController extends GetxController {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController biocontroller = TextEditingController();
-  TextEditingController addresscontroller = TextEditingController();
+  TextEditingController budgetcontroller = TextEditingController();
+  TextEditingController availableFromcontroller = TextEditingController();
+  TextEditingController availableTocontroller = TextEditingController();
 
   File? pickedImage;
 
@@ -34,10 +36,16 @@ class EditProfileController extends GetxController {
       passWord: userinfo['passWord'],
       age: userinfo['age'],
       bio: userinfo['bio'] ?? '',
+      budget: userinfo['budget'] ?? '',
+      availableFrom: userinfo['availableFrom'] ?? '',
+      availableTo: userinfo['availableTo'] ?? '',
       location: userinfo['location'],
     );
     namecontroller.text = userData.fullName ?? "";
     biocontroller.text = userData.bio ?? "";
+    budgetcontroller.text = userData.budget ?? "";
+    availableFromcontroller.text = userData.availableFrom ?? "";
+    availableTocontroller.text = userData.availableTo ?? "";
     update();
   }
 
@@ -56,7 +64,12 @@ class EditProfileController extends GetxController {
         inProgress = true;
         update();
         await userAuth.updateProfile(
-            bio: biocontroller.text, fullName: namecontroller.text);
+          bio: biocontroller.text,
+          fullName: namecontroller.text,
+          availableFrom: availableFromcontroller.text,
+          availableTo: availableTocontroller.text,
+          budget: budgetcontroller.text,
+        );
         Get.back();
         inProgress = false;
         update();
@@ -70,7 +83,6 @@ class EditProfileController extends GetxController {
           snackPosition: SnackPosition.TOP,
         );
       }
-      Get.back();
       inProgress = false;
       update();
     }

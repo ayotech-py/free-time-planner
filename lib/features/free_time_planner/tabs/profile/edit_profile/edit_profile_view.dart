@@ -77,19 +77,35 @@ class EditProfileView extends StatelessWidget {
                     height: 24.0,
                   ),
                   textAndTextField(
-                      controller: controller.namecontroller,
-                      formName: 'Enter your name',
-                      hintText: 'Kelvin Nate'),
+                    controller: controller.namecontroller,
+                    formName: 'Enter your name',
+                    hintText: 'Kelvin Nate',
+                  ),
                   const SizedBox(
                     height: 16.0,
                   ),
-                  /* textAndTextField(
-                        controller: controller.addresscontroller,
-                        formName: 'Enter your address',
-                        hintText: 'Quebec, Canada'),
-                    const SizedBox(
-                      height: 16.0,
-                    ),*/
+                  textAndTextField(
+                      controller: controller.budgetcontroller,
+                      formName: 'Enter your budget (\$)',
+                      hintText: '\$200'),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  textAndTextField(
+                      controller: controller.availableFromcontroller,
+                      formName: 'Available from',
+                      hintText: 'Enter time in 24hours e.g 12:00'),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  textAndTextField(
+                    controller: controller.availableTocontroller,
+                    formName: 'Available To',
+                    hintText: 'Enter time in 24hours e.g 22:00',
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
                   textAndTextField(
                       controller: controller.biocontroller,
                       formName: 'Enter your bio',

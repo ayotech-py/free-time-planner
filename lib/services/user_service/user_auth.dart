@@ -35,6 +35,9 @@ class UserAuth {
   Future<void> updateProfile({
     required String bio,
     required String fullName,
+    required String budget,
+    required String availableTo,
+    required String availableFrom,
   }) async {
     await _firestore
         .collection('users')
@@ -42,6 +45,9 @@ class UserAuth {
         .update({
       'fullName': fullName,
       'bio': bio,
+      'budget': budget,
+      'availableFrom': availableFrom,
+      'availableTo': availableTo
     });
   }
 

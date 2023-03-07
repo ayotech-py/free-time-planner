@@ -32,6 +32,10 @@ class ProfileController extends GetxController {
       fullName: userinfo['fullName'],
       passWord: userinfo['passWord'],
       age: userinfo['age'],
+      bio: userinfo['bio'] ?? '',
+      budget: userinfo['budget'] ?? '',
+      availableFrom: userinfo['availableFrom'] ?? '',
+      availableTo: userinfo['availableTo'] ?? '',
       location: userinfo['location'],
     );
     update();

@@ -84,11 +84,11 @@ class ProfileView extends StatelessWidget {
                     height: 8.0,
                   ),
                   Visibility(
-                    visible: controller.bio.isNotEmpty,
+                    visible: controller.userData.bio == null,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                       child: AppText(
-                        controller.bio,
+                        controller.userData.bio ?? "",
                         size: 14,
                         alignment: TextAlign.center,
                         //fontWeight: FontWeight.w600,
