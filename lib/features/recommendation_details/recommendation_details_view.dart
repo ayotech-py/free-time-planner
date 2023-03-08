@@ -4,7 +4,8 @@ import 'package:free_time_planner/features/recommendation_details/recommendation
 import 'package:free_time_planner/routes/exports.dart';
 
 class RecommendationDetailView extends StatelessWidget {
-  const RecommendationDetailView({super.key});
+  final String image;
+  const RecommendationDetailView({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class RecommendationDetailView extends StatelessWidget {
                   Stack(
                     children: [
                       Image.asset(
-                        'assets/images/sea.jpeg',
+                        image,
                         fit: BoxFit.cover,
                       ),
                       Positioned(

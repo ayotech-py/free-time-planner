@@ -3,7 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:free_time_planner/routes/exports.dart';
 
 class RecommendationHomeItem extends StatelessWidget {
-  const RecommendationHomeItem({super.key});
+  final String image;
+  const RecommendationHomeItem({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class RecommendationHomeItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-            'assets/images/sea.jpeg',
+            image,
             fit: BoxFit.cover,
           ),
           Container(

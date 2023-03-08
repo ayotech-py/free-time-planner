@@ -3,6 +3,7 @@ import 'package:free_time_planner/features/free_time_planner/tabs/home/home_cont
 import 'package:free_time_planner/features/free_time_planner/tabs/profile/profile_controller.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/utils/utils.dart';
 
 class SavedTabView extends StatelessWidget {
   const SavedTabView({super.key});
@@ -26,9 +27,13 @@ class SavedTabView extends StatelessWidget {
           itemBuilder: (BuildContext ctx, index) {
             return GestureDetector(
                 onTap: () {
-                  Get.to(() => const RecommendationDetailView());
+                  Get.to(() => RecommendationDetailView(
+                        image: img[index],
+                      ));
                 },
-                child: const RecommendationHomeItem());
+                child: RecommendationHomeItem(
+                  image: img[index],
+                ));
           },
         );
       },
