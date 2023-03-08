@@ -32,13 +32,13 @@ class SplashScreenController extends GetxController
 
     if (user != null) {
       await Future.delayed(
-        const Duration(seconds: 1),
+        const Duration(seconds: 3),
       );
       print('Authenticated');
       Get.to(() => const BottomNavigationView());
     } else {
       await Future.delayed(
-        const Duration(seconds: 1),
+        const Duration(seconds: 3),
       );
       Get.to(() => const LoginView());
       print('Not authenticated');

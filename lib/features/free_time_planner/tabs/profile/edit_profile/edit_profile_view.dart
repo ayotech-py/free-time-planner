@@ -130,7 +130,7 @@ class EditProfileView extends StatelessWidget {
                         color: Colors.white,
                       ),
                       child: const AppText(
-                        'Update Profile',
+                        'Update',
                         color: Colors.white,
                         size: 16,
                         fontWeight: FontWeight.w500,
