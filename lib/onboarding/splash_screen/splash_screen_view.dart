@@ -13,16 +13,45 @@ class SplashScreenView extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           body: Center(
-              child: AnimatedBuilder(
-            animation: controller.animation,
-            builder: (BuildContext context, Widget? _) {
-              return AppText(
-                '''Free
+              child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AppAssets.tour,
+                height: MediaQuery.of(context).size.height * 1,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const AppText(
+                'Free Time Planner',
+                fontWeight: FontWeight.w600,
+                size: 25,
+              ),
+              const SizedBox(
+                height: 4.0,
+              ),
+              const AppText(
+                'Welcome Back! Resume your journey from where you stop',
+                alignment: TextAlign.center,
+                size: 18,
+              ),
+
+              /*AnimatedBuilder(
+                animation: controller.animation,
+                builder: (BuildContext context, Widget? _) {
+                  return AppText(
+                    '''Free
      Time
          Planner''',
-                size: controller.animation.value,
-              );
-            },
+                    size: controller.animation.value,
+                  );
+                },
+              ),*/
+            ],
           )),
         );
       },
