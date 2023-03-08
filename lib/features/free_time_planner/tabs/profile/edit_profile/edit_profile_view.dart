@@ -108,10 +108,10 @@ class EditProfileView extends StatelessWidget {
                   ),
                   textAndTextField(
                       controller: controller.biocontroller,
-                      formName: 'Enter your bio',
+                      formName: 'Purpose of visit',
                       minline: 5,
                       maxLine: 6,
-                      hintText: 'Describe yourself...'),
+                      hintText: 'Short description...'),
                   const SizedBox(
                     height: 24.0,
                   ),
