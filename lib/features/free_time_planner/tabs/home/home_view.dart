@@ -38,7 +38,7 @@ class HomeView extends StatelessWidget {
                       children: [
                         const Avatar.large(
                             url:
-                                'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'),
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4gblbqeZrSBciDkbuqbbLH0DgAxQjd2TUP6HnqWygeg&s'),
                         const SizedBox(
                           width: 8.0,
                         ),
@@ -92,37 +92,37 @@ class HomeView extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Hodels',
+                                  text: 'Hotels and Accomodation',
                                 ),
                               ),
                               SizedBox(
                                 width: 120,
                                 child: Padding(
                                   padding: EdgeInsets.all(4.0),
-                                  child: Tab(text: 'Resturants'),
+                                  child: Tab(text: 'Food,wine and nightlife'),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Cinemas',
+                                  text: 'Recommended Experience',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Malls',
+                                  text: 'Other Services',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Museuns',
+                                  text: 'Tours and sightseeing',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
-                                child: Tab(text: 'Favorites'),
+                                child: Tab(text: 'Other activities'),
                               ),
                             ],
                           ),

@@ -74,7 +74,7 @@ class ProfileView extends StatelessWidget {
                     children: [
                       Icon(Icons.location_on),
                       AppText(
-                        controller.userData.location ?? 'Toronto, Canada',
+                        controller.userData.location ?? 'Montreal, Canada',
                         size: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -148,37 +148,37 @@ class ProfileView extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Hodels & Accommodation',
+                                  text: 'Hotels & Accommodation',
                                 ),
                               ),
                               SizedBox(
                                 width: 120,
                                 child: Padding(
                                   padding: EdgeInsets.all(4.0),
-                                  child: Tab(text: 'Food & Drinks'),
+                                  child: Tab(text: 'Food, wine & Nightlife'),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Experience',
+                                  text: 'Recommended Experience',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Service',
+                                  text: 'Other Services',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
                                 child: Tab(
-                                  text: 'Product',
+                                  text: 'tours & sightseeing',
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(4.0),
-                                child: Tab(text: 'Hit List'),
+                                child: Tab(text: 'Outdoor activities'),
                               ),
                             ],
                           ),
