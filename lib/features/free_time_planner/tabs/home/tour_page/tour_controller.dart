@@ -1,77 +1,25 @@
 import 'dart:developer';
 
 import 'package:free_time_planner/data/local/localstorage.dart';
-import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
 import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
-class RecommendationController extends GetxController {
+class TourPageController extends GetxController {
   int tabIndex = 0;
   bool isLoading = true;
+  UserModel userData = UserModel();
+  UserAuth userAuth = UserAuth();
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
   String? currentAddress;
   Position? currentPosition;
-  List<PlaceUserModel> resturants = [];
-  String selectedType = 'casino';
-  bool inProgress = false;
-  List<String> listoftypes = [
-    "accounting",
-    "airport",
-    "amusement_park",
-    "aquarium",
-    "art_gallery",
-    'atm',
-    "bakery",
-    "bank",
-    "bar",
-    "beauty_salon",
-    "bicycle_store",
-    "book_store",
-    "bowling_alley",
-    "bus_station",
-    "cafe",
-    "campground",
-    "car_dealer",
-    "car_rental",
-    "car_repair",
-    "car_wash",
-    "casino",
-    "cemetery",
-    "church",
-    "city_hall",
-    "clothing_store",
-    "convenience_store",
-    "courthouse",
-    "dentist",
-    "department_store",
-    "doctor",
-    "drugstore",
-    "electrician",
-    "electronics_store",
-    "embassy",
-    "fire_station",
-    "florist",
-    "funeral_home",
-    "furniture_store",
-    "gas_station",
-    "gym",
-    "hair_care",
-    "hardware_store",
-    "hindu_temple",
-    "home_goods_store"
-        "hospital"
-        "insurance_agency",
-    "jewelry_store",
-    "laundry"
-  ];
+
+  List<PlaceUserModel> tour = [];
 
   @override
   void onInit() async {
-    //await Future.delayed(Duration(seconds: 2));
     // await getCurrentPosition();
     // print(
     //     'long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
@@ -89,17 +37,14 @@ class RecommendationController extends GetxController {
       await Future.wait([
         placeRepo
             .getNewPlaces(
-              lat:
-                  //'45.50884',
-                  currentUserPosition.lat,
-              long:
-                  //'73.58781',
-                  currentUserPosition.long,
-              type: selectedType,
-            )
-            .then((value) => resturants = value)
-        //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
-        //chatRepo .getAllReadContacts(currentUser!.token).then((value) => allReadContactList = value)
+                lat:
+                    //'45.50884',
+                    currentUserPosition.lat,
+                long:
+                    //'73.58781',
+                    currentUserPosition.long,
+                type: 'tourist_attraction')
+            .then((value) => tour = value),
       ]);
     } on Exception catch (e) {
       //This will show whenever there's issue with any of the api
@@ -193,50 +138,6 @@ class RecommendationController extends GetxController {
     }).catchError((e) {
       debugPrint(e);
     });
-  }
-
-  void bottomBankSelection() {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.only(
-          left: 16.0,
-          top: 36.0,
-          bottom: 16.0,
-        ),
-        //color: Colors.white,
-        height: 500,
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () async {
-                selectedType = listoftypes[index];
-                update();
-                Get.back();
-                await fetchPlaces();
-              },
-              child: AppText(
-                listoftypes[index],
-                size: 22,
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 16.0,
-            );
-          },
-          itemCount: listoftypes.length,
-        ),
-      ),
-      enableDrag: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(50),
-          topRight: Radius.circular(50),
-        ),
-      ),
-    );
   }
 
   UserPosition get currentUserPosition => LocalStorage().getUserPosition();

@@ -28,6 +28,7 @@ class UserAuth {
       'passWord': password,
       'location': location,
       'avatar': '',
+      'bio': 'tourist_attraction'
     });
   }
 

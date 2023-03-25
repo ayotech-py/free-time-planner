@@ -9,9 +9,9 @@ class BottomNavController extends GetxController {
   int selectedIndex = 0;
   final List children = [
     const HomeView(),
-    const AddRecommendationView(),
+    //const AddRecommendationView(),
     const ProfileView(),
-    const NotificationView(),
+    //const NotificationView(),
     const RecommendationView(),
   ];
   void onItemTapped(int index) {

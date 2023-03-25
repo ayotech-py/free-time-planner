@@ -25,30 +25,33 @@ class EditProfileView extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 16.0,
                   ),
-                  const AppText(
-                    'Add a profile photo, name,telephone, and bio to let people know who you are',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    size: 14,
+                  const Center(
+                    child: AppText(
+                      'Add a profile photo, name,telephone, and bio to let people know who you are',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      size: 14,
+                    ),
                   ),
                   const SizedBox(
                     height: 24.0,
                   ),
                   GestureDetector(
                     onTap: () {
-                      //controller.pickImage();
+                      controller.pickImage();
                     },
                     child: Center(
                       child: Stack(
                         children: [
                           controller.pickedImage == null
-                              ? const Avatar.largest(
-                                  url:
-                                      'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg')
+                              ? Avatar.largest(
+                                  url: controller.userData.avatar ?? '',
+                                )
                               : CircleAvatar(
                                   radius: 75,
                                   backgroundImage: FileImage(
@@ -62,7 +65,7 @@ class EditProfileView extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: AppColors.primaryColor,
                                   shape: BoxShape.circle),
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(13.0),
                               child: const Icon(
                                 Icons.camera_alt_outlined,
                                 color: Colors.white,
@@ -106,12 +109,55 @@ class EditProfileView extends StatelessWidget {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  textAndTextField(
-                      controller: controller.biocontroller,
-                      formName: 'Purpose of visit',
-                      minline: 5,
-                      maxLine: 6,
-                      hintText: 'Short description...'),
+                  // textAndTextField(
+                  //     controller: controller.biocontroller,
+                  //     formName: 'Purpose of visit',
+                  //     minline: 5,
+                  //     maxLine: 6,
+                  //     hintText: 'Short description...'),
+                  // const SizedBox(
+                  //   height: 24.0,
+                  // ),
+                  const AppText(
+                    'Favourite Category',
+                    fontWeight: FontWeight.bold,
+                    size: 18,
+                  ),
+                  const SizedBox(
+                    height: 4.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppText(
+                          controller.selectedType,
+                          size: 20,
+                        ),
+                        AppButton(
+                          //width: double.infinity,
+                          padding: const EdgeInsets.only(
+                              right: 8.0, top: 10.0, bottom: 10.0, left: 8.0),
+                          color: AppColors.primaryColor,
+                          onPressed: () {
+                            controller.bottomBankSelection();
+                          },
+                          elevation: 0,
+                          radius: 10,
+                          child: const AppText(
+                            'Select Category',
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 24.0,
                   ),
