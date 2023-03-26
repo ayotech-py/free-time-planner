@@ -1,75 +1,27 @@
 import 'dart:developer';
 
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:free_time_planner/data/local/localstorage.dart';
-import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
-import 'package:free_time_planner/models/places/nearby_places_model.dart';
+
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
+import 'package:free_time_planner/utils/utils.dart';
+
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_webservice/places.dart';
 
 class RecommendationController extends GetxController {
   int tabIndex = 0;
   bool isLoading = true;
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
+  TextEditingController searchController = TextEditingController();
   String? currentAddress;
   Position? currentPosition;
   List<PlaceUserModel> resturants = [];
   String selectedType = 'casino';
   bool inProgress = false;
-  List<String> listoftypes = [
-    "accounting",
-    "airport",
-    "amusement_park",
-    "aquarium",
-    "art_gallery",
-    'atm',
-    "bakery",
-    "bank",
-    "bar",
-    "beauty_salon",
-    "bicycle_store",
-    "book_store",
-    "bowling_alley",
-    "bus_station",
-    "cafe",
-    "campground",
-    "car_dealer",
-    "car_rental",
-    "car_repair",
-    "car_wash",
-    "casino",
-    "cemetery",
-    "church",
-    "city_hall",
-    "clothing_store",
-    "convenience_store",
-    "courthouse",
-    "dentist",
-    "department_store",
-    "doctor",
-    "drugstore",
-    "electrician",
-    "electronics_store",
-    "embassy",
-    "fire_station",
-    "florist",
-    "funeral_home",
-    "furniture_store",
-    "gas_station",
-    "gym",
-    "hair_care",
-    "hardware_store",
-    "hindu_temple",
-    "home_goods_store"
-        "hospital"
-        "insurance_agency",
-    "jewelry_store",
-    "laundry"
-  ];
 
   @override
   void onInit() async {
@@ -79,6 +31,7 @@ class RecommendationController extends GetxController {
     //     'long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
     await fetchPlaces();
     update();
+    analyticsService.logCurrentScreen(name: 'Search page');
     super.onInit();
   }
 
@@ -90,14 +43,17 @@ class RecommendationController extends GetxController {
       /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
       await Future.wait([
         placeRepo
-            .getNewPlaces(
+            .getByKeyword(
               lat:
                   //'45.50884',
                   currentUserPosition.lat,
               long:
                   //'73.58781',
                   currentUserPosition.long,
-              type: selectedType,
+              type: 'tourist_attraction',
+              keyword: searchController.text.isEmpty
+                  ? 'tour'
+                  : searchController.text,
             )
             .then((value) => resturants = value)
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
@@ -239,23 +195,6 @@ class RecommendationController extends GetxController {
         ),
       ),
     );
-  }
-
-  Future<void> displayPrediction(
-    Prediction p,
-  ) async {
-    if (p != null) {
-      // get detail (lat/lng
-      GoogleMapsPlaces places = GoogleMapsPlaces(
-          apiKey:
-              'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4'); //Same API_KEY as above
-      PlacesDetailsResponse detail =
-          await places.getDetailsByPlaceId(p.placeId!);
-      final lat = detail.result.geometry!.location.lat;
-      final lng = detail.result.geometry!.location.lng;
-
-      print("${p.description} - $lat/$lng");
-    }
   }
 
   UserPosition get currentUserPosition => LocalStorage().getUserPosition();

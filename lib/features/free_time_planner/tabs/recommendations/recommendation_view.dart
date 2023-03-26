@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
+
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/recommendations/recommendation_controller.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/utils/utils.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:google_places_for_flutter/google_places_for_flutter.dart';
 
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});
@@ -30,6 +28,7 @@ class RecommendationView extends StatelessWidget {
                   children: [
                     SearchAndtext(
                       controller: controller,
+                      searchController: controller.searchController,
                     ),
                     // SearchGooglePlacesWidget(
                     //   placeType: PlaceType
@@ -57,8 +56,12 @@ class RecommendationView extends StatelessWidget {
                       if (controller.resturants.isEmpty) {
                         return const Center(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 40.0),
-                            child: AppText('No messages'),
+                            padding: EdgeInsets.only(
+                                top: 40.0, left: 20.0, right: 20.0),
+                            child: AppText(
+                              'No recommendation at the moment, pull to referesh',
+                              alignment: TextAlign.center,
+                            ),
                           ),
                         );
                       }
@@ -134,7 +137,9 @@ class RecommendationView extends StatelessWidget {
 
 class SearchAndtext extends StatelessWidget {
   final RecommendationController controller;
-  const SearchAndtext({super.key, required this.controller});
+  final TextEditingController searchController;
+  const SearchAndtext(
+      {super.key, required this.controller, required this.searchController});
 
   @override
   Widget build(
@@ -147,38 +152,11 @@ class SearchAndtext extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         //mainAxisAlignment: MainA,
         children: [
-          GestureDetector(
-            onTap: () async {
-              // show input autocomplete with selected mode
-              // then get the Prediction selected
-              Prediction? p = await PlacesAutocomplete.show(
-                context: context,
-                apiKey: 'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4',
-                onError: (value) {},
-                mode: Mode.overlay,
-                language: "en",
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                components: [Component(Component.country, "fr")],
-              );
-
-              controller.displayPrediction(
-                p!,
-              );
-            },
-            child: const AppText(
-              'Recommendation For You',
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              size: 18,
-            ),
+          const AppText(
+            'Recommendation For You',
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            size: 18,
           ),
           const SizedBox(
             height: 10.0,
@@ -209,50 +187,26 @@ class SearchAndtext extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          GestureDetector(
-            onTap: () async {
-              // show input autocomplete with selected mode
-              // then get the Prediction selected
-              Prediction? p = await PlacesAutocomplete.show(
-                context: context,
-                apiKey: 'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4',
-                onError: (value) {},
-                mode: Mode.fullscreen,
-                language: "fr",
-                strictbounds: true,
-                types: ['resturants'],
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                components: [Component(Component.country, "fr")],
-              );
-
-              controller.displayPrediction(
-                p!,
-              );
-            },
-            // height: 30,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.grey.shade200,
-              ),
-              child: const TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search...',
-                  //contentPadding: EdgeInsets.all(10.0),
-                  prefixIcon: Icon(
-                    CupertinoIcons.search,
-                    color: Colors.black,
-                    //size: 20,
-                  ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.grey.shade200,
+            ),
+            child: TextField(
+              onSubmitted: (value) async {
+                await controller.fetchPlaces();
+                controller.analyticsService
+                    .logSearch(query: searchController.text);
+              },
+              controller: searchController,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Search...',
+                //contentPadding: EdgeInsets.all(10.0),
+                prefixIcon: Icon(
+                  CupertinoIcons.search,
+                  color: Colors.black,
+                  //size: 20,
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:free_time_planner/components/avatar.dart';
 import 'package:free_time_planner/features/comment_page/comment_view.dart';
+import 'package:free_time_planner/features/free_time_planner/tabs/recommendations/recommendation_controller.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_detail_controller.dart';
 import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
@@ -105,24 +106,22 @@ class RecommendationDetailView extends StatelessWidget {
                         const SizedBox(
                           width: 8.0,
                         ),
-                        const Icon(Icons.bookmark_add_outlined)
+                        //const Icon(Icons.bookmark_add_outlined)
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: sharingRow(
-                        onContactTap: () {
-                          launchUrlStart(
-                              url:
-                                  'tel://${place.internationalPhoneNumber ?? ''}');
-                          print(place.internationalPhoneNumber);
-                        },
-                        onMapTap: () {
-                          MapsLauncher.launchQuery(place.attractionAddress!);
-                          //launchUrlStart(url: controller.place.url ?? '');
-                        },
-                        onWebsiteTap: () {}),
+                    child: sharingRow(onContactTap: () {
+                      launchUrlStart(
+                          url: 'tel://${place.internationalPhoneNumber ?? ''}');
+                      print(place.internationalPhoneNumber);
+                    }, onMapTap: () {
+                      MapsLauncher.launchQuery(place.attractionAddress!);
+                      //launchUrlStart(url: controller.place.url ?? '');
+                    }, onWebsiteTap: () {
+                      launchUrlStart(url: 'https://www.booking.com');
+                    }),
                   ),
                   const SizedBox(
                     height: 8.0,
@@ -136,9 +135,10 @@ class RecommendationDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Avatar.medium(
-                          url:
-                              'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
-                        ),
+                            url:
+                                'https://static.vecteezy.com/system/resources/previews/009/131/181/original/ftp-logo-ftp-letter-ftp-letter-logo-design-initials-ftp-logo-linked-with-circle-and-uppercase-monogram-logo-ftp-typography-for-technology-business-and-real-estate-brand-vector.jpg'
+                            //'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                            ),
                         const SizedBox(
                           width: 8.0,
                         ),
@@ -214,13 +214,16 @@ ${place.attractionAddress}.''')
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: likeCommentShare(
+                      place: place,
                       onCommenTap: () {
                         Get.to(
                           () => CommentPageView(
                               commentId: place.reference ?? 'no Id comments'),
                         );
                       },
-                      onLikeTap: () {},
+                      onLikeTap: () {
+                        controller.ratingDialog(place.reference!);
+                      },
                       onShareTap: () async {
                         await Share.share(
                           'Look at ${place.attractionName} it is located at ${place.attractionAddress} and I know you\'ll love it. You can contact them at ${place.internationalPhoneNumber}. Recommendation by Free Time Planner!!!',
@@ -267,7 +270,7 @@ Widget sharingRow({
             children: const [
               Icon(Icons.exit_to_app),
               AppText(
-                'Website',
+                'Booking',
               ),
             ],
           ),
@@ -321,6 +324,7 @@ Widget likeCommentShare({
   required Function() onLikeTap,
   required Function() onCommenTap,
   required Function() onShareTap,
+  required PlaceUserModel place,
 }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -339,8 +343,8 @@ Widget likeCommentShare({
             const SizedBox(
               width: 3.0,
             ),
-            const AppText(
-              '5.0',
+            AppText(
+              '${place.ratings ?? 4.5}',
             ),
           ],
         ),

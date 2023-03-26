@@ -29,6 +29,13 @@
             {
               "client_id": "543560135896-lkln3efr9l2s1kpj4gos4csqej97m9ac.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "543560135896-uvui3b8n476bo0ulu8hsbjscab3jbtb4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.freeTimePlanner"
+              }
             }
           ]
         }

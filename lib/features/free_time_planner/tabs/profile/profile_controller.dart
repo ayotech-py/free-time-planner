@@ -11,6 +11,7 @@ import 'package:free_time_planner/models/places/province_model.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
 import 'package:free_time_planner/onboarding/authentication/login/login_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
 import 'package:free_time_planner/utils/utils.dart';
 import 'package:geocoding/geocoding.dart';
@@ -28,7 +29,7 @@ class ProfileController extends GetxController {
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
 
   List<PlaceUserModel> resturants = [];
-
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
   int tabIndex = 0;
   void onTabChanged(int value) {
     tabIndex = value;
@@ -43,6 +44,7 @@ class ProfileController extends GetxController {
     //     'long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
     await user();
     await fetchPlaces();
+    analyticsService.logCurrentScreen(name: 'Profile page');
     update();
     super.onInit();
   }

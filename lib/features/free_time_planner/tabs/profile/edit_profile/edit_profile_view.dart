@@ -106,58 +106,58 @@ class EditProfileView extends StatelessWidget {
                     formName: 'Available To',
                     hintText: 'Enter time in 24hours e.g 22:00',
                   ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  // textAndTextField(
-                  //     controller: controller.biocontroller,
-                  //     formName: 'Purpose of visit',
-                  //     minline: 5,
-                  //     maxLine: 6,
-                  //     hintText: 'Short description...'),
                   // const SizedBox(
-                  //   height: 24.0,
+                  //   height: 16.0,
                   // ),
-                  const AppText(
-                    'Favourite Category',
-                    fontWeight: FontWeight.bold,
-                    size: 18,
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AppText(
-                          controller.selectedType,
-                          size: 20,
-                        ),
-                        AppButton(
-                          //width: double.infinity,
-                          padding: const EdgeInsets.only(
-                              right: 8.0, top: 10.0, bottom: 10.0, left: 8.0),
-                          color: AppColors.primaryColor,
-                          onPressed: () {
-                            controller.bottomBankSelection();
-                          },
-                          elevation: 0,
-                          radius: 10,
-                          child: const AppText(
-                            'Select Category',
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // // textAndTextField(
+                  // //     controller: controller.biocontroller,
+                  // //     formName: 'Purpose of visit',
+                  // //     minline: 5,
+                  // //     maxLine: 6,
+                  // //     hintText: 'Short description...'),
+                  // // const SizedBox(
+                  // //   height: 24.0,
+                  // // ),
+                  // const AppText(
+                  //   'Favourite Category',
+                  //   fontWeight: FontWeight.bold,
+                  //   size: 18,
+                  // ),
+                  // const SizedBox(
+                  //   height: 4.0,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //     left: 16.0,
+                  //     right: 16.0,
+                  //   ),
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       AppText(
+                  //         controller.selectedType,
+                  //         size: 20,
+                  //       ),
+                  //       AppButton(
+                  //         //width: double.infinity,
+                  //         padding: const EdgeInsets.only(
+                  //             right: 8.0, top: 10.0, bottom: 10.0, left: 8.0),
+                  //         color: AppColors.primaryColor,
+                  //         onPressed: () {
+                  //           controller.bottomBankSelection();
+                  //         },
+                  //         elevation: 0,
+                  //         radius: 10,
+                  //         child: const AppText(
+                  //           'Select Category',
+                  //           color: Colors.white,
+                  //           size: 18,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 24.0,
                   ),

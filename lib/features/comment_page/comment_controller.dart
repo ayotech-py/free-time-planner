@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:free_time_planner/models/comment_model/comment_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:jiffy/jiffy.dart';
 
 class CommentController extends GetxController {
@@ -10,6 +11,7 @@ class CommentController extends GetxController {
   List<QueryDocumentSnapshot> comments = [];
   UserModel userData = UserModel();
   UserAuth userAuth = UserAuth();
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
   List<CommentModel> commentsList = [];
   int limit = 20;
   int limitIncrement = 20;
@@ -20,6 +22,7 @@ class CommentController extends GetxController {
     listScrollController.addListener(scrollListener);
     await user();
     update();
+    await analyticsService.logCurrentScreen(name: 'Comment page');
     super.onInit();
   }
 
@@ -97,6 +100,9 @@ class CommentController extends GetxController {
           'avatar': userData.avatar,
           'date': date,
           'time': time
+        });
+        await analyticsService.logEvent(eventName: 'comments', param: {
+          'Sent Comment': textEditingController.text,
         });
         //commentInrement(articleId, type);
         return true;

@@ -8,6 +8,7 @@ import 'package:free_time_planner/features/free_time_planner/tabs/profile/profil
 import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/utils/utils.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -129,8 +130,10 @@ class ProfileView extends StatelessWidget {
                         width: double.infinity,
                         padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                         color: Colors.black,
-                        onPressed: () {
-                          //controller.onSignup(context);
+                        onPressed: () async {
+                          await Share.share(
+                            'Download the Free Time Planner app now and enjoy recommendation of places you can visit. I know you\'ll love it.',
+                          );
                         },
                         elevation: 0,
                         radius: 10,
@@ -215,7 +218,8 @@ class ProfileView extends StatelessWidget {
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 5,
                         ),
-                        itemCount: controller.resturants.length,
+                        itemCount: 8,
+                        //controller.resturants.length,
                         itemBuilder: (BuildContext ctx, index) {
                           return GestureDetector(
                               onTap: () {

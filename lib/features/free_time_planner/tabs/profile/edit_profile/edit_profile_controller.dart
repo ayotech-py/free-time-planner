@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,6 +20,7 @@ class EditProfileController extends GetxController {
   final _fireStorage = FirebaseStorage.instance;
   File? pickedImage;
   String selectedType = 'resturant';
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
 
   UserModel userData = UserModel();
   UserAuth userAuth = UserAuth();
@@ -29,54 +31,6 @@ class EditProfileController extends GetxController {
     "park",
     'museum',
     "tourist_attraction",
-    // "accounting",
-    // "airport",
-    // "amusement_park",
-    // "aquarium",
-    // "art_gallery",
-    // 'atm',
-    // "bakery",
-    // "bank",
-    // "bar",
-    // "beauty_salon",
-    // "bicycle_store",
-    // "book_store",
-    // "bowling_alley",
-    // "bus_station",
-    // "cafe",
-    // "campground",
-    // "car_dealer",
-    // "car_rental",
-    // "car_repair",
-    // "car_wash",
-    // "casino",
-    // "cemetery",
-    // "church",
-    // "city_hall",
-    // "clothing_store",
-    // "convenience_store",
-    // "courthouse",
-    // "dentist",
-    // "department_store",
-    // "doctor",
-    // "drugstore",
-    // "electrician",
-    // "electronics_store",
-    // "embassy",
-    // "fire_station",
-    // "florist",
-    // "funeral_home",
-    // "furniture_store",
-    // "gas_station",
-    // "gym",
-    // "hair_care",
-    // "hardware_store",
-    // "hindu_temple",
-    // "home_goods_store"
-    //     "hospital"
-    //     "insurance_agency",
-    // "jewelry_store",
-    // "laundry"
   ];
 
   @override
@@ -84,6 +38,7 @@ class EditProfileController extends GetxController {
     //await Future.delayed(Duration(seconds: 2));
     await user();
     update();
+    analyticsService.logCurrentScreen(name: 'Edit Profile page');
     super.onInit();
   }
 

@@ -5,6 +5,7 @@ import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:geocoding/geocoding.dart';
 
 class TourPageController extends GetxController {
@@ -15,7 +16,7 @@ class TourPageController extends GetxController {
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
   String? currentAddress;
   Position? currentPosition;
-
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
   List<PlaceUserModel> tour = [];
 
   @override
@@ -25,6 +26,7 @@ class TourPageController extends GetxController {
     //     'long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
     await fetchPlaces();
     update();
+    analyticsService.logCurrentScreen(name: 'Tourist page');
     super.onInit();
   }
 

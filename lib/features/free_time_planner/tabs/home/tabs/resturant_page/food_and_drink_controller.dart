@@ -5,6 +5,7 @@ import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:geocoding/geocoding.dart';
 
 class FoodAndDrinkPageController extends GetxController {
@@ -14,6 +15,7 @@ class FoodAndDrinkPageController extends GetxController {
   UserAuth userAuth = UserAuth();
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
   String? currentAddress;
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
   Position? currentPosition;
 
   List<PlaceUserModel> resturants = [];
@@ -24,6 +26,7 @@ class FoodAndDrinkPageController extends GetxController {
     //print('long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
     await fetchPlaces();
     update();
+    analyticsService.logCurrentScreen(name: 'Resturant page');
     super.onInit();
   }
 

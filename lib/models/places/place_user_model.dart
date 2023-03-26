@@ -60,7 +60,9 @@ class PlaceUserModel {
         attractionImages: json?["attraction_images"] != null
             ? List<String>.from(json?["attraction_images"].map((x) => x))
             : [],
-        ratings: double.parse(json!["ratings"].toString()),
+        ratings: json!["ratings"] != null
+            ? double.parse(json!["ratings"].toString())
+            : 4.0,
       );
 
   Map<String, dynamic> toMap() => {

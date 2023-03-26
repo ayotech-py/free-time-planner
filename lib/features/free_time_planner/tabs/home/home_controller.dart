@@ -9,6 +9,7 @@ import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
 import 'package:free_time_planner/onboarding/authentication/login/login_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,6 +22,7 @@ class HomeController extends GetxController {
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
   String? currentAddress;
   Position? currentPosition;
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
 
   List<NearbyPlaces> resturants = [];
   List<NearbyPlaces> hotels = [];
@@ -35,6 +37,7 @@ class HomeController extends GetxController {
     //await Future.delayed(Duration(seconds: 2));
     await user();
     await getCurrentPosition();
+    analyticsService.logCurrentScreen(name: 'Home page');
     LocalStorage().setUserState(UserPosition(
         long: currentPosition!.longitude, lat: currentPosition!.latitude));
     print(

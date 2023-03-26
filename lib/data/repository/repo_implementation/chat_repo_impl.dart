@@ -64,4 +64,27 @@ class PlaceRepoImpl {
     print(places);
     return places.map((e) => PlaceUserModel.fromMap(e)).toList();
   }
+
+  Future<List<PlaceUserModel>> getByKeyword({
+    required double? lat,
+    required double? long,
+    required String type,
+    required String keyword,
+  }) async {
+    final res = await _dio.postUri<ResMap>(
+      //
+      //'https://tourist-attraction-api.onrender.com/places/tourist_attraction',
+      AppApiConfig.getbyKeyword(),
+      data: {
+        "lng": long ?? 73.58781,
+        "lat": lat ?? 45.50884,
+        "type": type,
+        'radius': 1000,
+        'keyword': keyword
+      },
+    );
+    final places = (res.data?['data']['places'] as List);
+    print(places);
+    return places.map((e) => PlaceUserModel.fromMap(e)).toList();
+  }
 }
