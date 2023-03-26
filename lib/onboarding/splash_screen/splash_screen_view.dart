@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:free_time_planner/onboarding/splash_screen/splash_screen_controller.dart';
 import 'package:free_time_planner/routes/exports.dart';
 

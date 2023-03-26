@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
 import 'package:free_time_planner/models/places/place_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:share_plus/share_plus.dart';
 
 class RecommendationDetailController extends GetxController {
@@ -12,6 +13,8 @@ class RecommendationDetailController extends GetxController {
   //   formattedAddress: '',
   //   formattedPhoneNumber: '',
   // );
+
+  final date = Jiffy(DateTime.now()).format('dd-MM-yyyy');
   bool isLoading = true;
 
   @override

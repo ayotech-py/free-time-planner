@@ -6,8 +6,10 @@ import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class RecommendationController extends GetxController {
   int tabIndex = 0;
@@ -237,6 +239,23 @@ class RecommendationController extends GetxController {
         ),
       ),
     );
+  }
+
+  Future<void> displayPrediction(
+    Prediction p,
+  ) async {
+    if (p != null) {
+      // get detail (lat/lng
+      GoogleMapsPlaces places = GoogleMapsPlaces(
+          apiKey:
+              'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4'); //Same API_KEY as above
+      PlacesDetailsResponse detail =
+          await places.getDetailsByPlaceId(p.placeId!);
+      final lat = detail.result.geometry!.location.lat;
+      final lng = detail.result.geometry!.location.lng;
+
+      print("${p.description} - $lat/$lng");
+    }
   }
 
   UserPosition get currentUserPosition => LocalStorage().getUserPosition();

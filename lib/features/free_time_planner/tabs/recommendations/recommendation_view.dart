@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/recommendations/recommendation_controller.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/utils/utils.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:google_places_for_flutter/google_places_for_flutter.dart';
 
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});
@@ -28,6 +31,19 @@ class RecommendationView extends StatelessWidget {
                     SearchAndtext(
                       controller: controller,
                     ),
+                    // SearchGooglePlacesWidget(
+                    //   placeType: PlaceType
+                    //       .cities, // PlaceType.cities, PlaceType.geocode, PlaceType.region etc
+                    //   placeholder: 'Enter the address',
+                    //   apiKey: 'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4',
+                    //   onSearch: (Place place) {},
+                    //   onSelected: (Place place) async {
+                    //     final geolocation = await place.geolocation;
+                    //     final lng = geolocation!.fullJSON;
+                    //     //print(lng);
+                    //     print('address ${place.description}');
+                    //   },
+                    // ),
                     Builder(builder: (context) {
                       if (controller.isLoading) {
                         return Padding(
@@ -131,62 +147,116 @@ class SearchAndtext extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         //mainAxisAlignment: MainA,
         children: [
-          const AppText(
-            'Recommendation For You',
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            size: 18,
+          GestureDetector(
+            onTap: () async {
+              // show input autocomplete with selected mode
+              // then get the Prediction selected
+              Prediction? p = await PlacesAutocomplete.show(
+                context: context,
+                apiKey: 'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4',
+                onError: (value) {},
+                mode: Mode.overlay,
+                language: "en",
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                components: [Component(Component.country, "fr")],
+              );
+
+              controller.displayPrediction(
+                p!,
+              );
+            },
+            child: const AppText(
+              'Recommendation For You',
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              size: 18,
+            ),
           ),
           const SizedBox(
             height: 10.0,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppText(
-                controller.selectedType,
-                size: 20,
-              ),
-              AppButton(
-                //width: double.infinity,
-                padding: const EdgeInsets.only(
-                    right: 8.0, top: 10.0, bottom: 10.0, left: 8.0),
-                color: AppColors.primaryColor,
-                onPressed: () {
-                  controller.bottomBankSelection();
-                },
-                elevation: 0,
-                radius: 10,
-                child: const AppText(
-                  'Select Category',
-                  color: Colors.white,
-                  size: 18,
-                ),
-              ),
-            ],
-          ),
-          // Container(
-          //   // height: 30,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(15),
-          //       color: Colors.grey.shade200,
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     AppText(
+          //       controller.selectedType,
+          //       size: 20,
           //     ),
-          //     child: const TextField(
-          //       decoration: InputDecoration(
-          //         border: InputBorder.none,
-          //         hintText: 'Search...',
-          //         //contentPadding: EdgeInsets.all(10.0),
-          //         prefixIcon: Icon(
-          //           CupertinoIcons.search,
-          //           color: Colors.black,
-          //           //size: 20,
-          //         ),
+          //     AppButton(
+          //       //width: double.infinity,
+          //       padding: const EdgeInsets.only(
+          //           right: 8.0, top: 10.0, bottom: 10.0, left: 8.0),
+          //       color: AppColors.primaryColor,
+          //       onPressed: () {
+          //         controller.bottomBankSelection();
+          //       },
+          //       elevation: 0,
+          //       radius: 10,
+          //       child: const AppText(
+          //         'Select Category',
+          //         color: Colors.white,
+          //         size: 18,
           //       ),
           //     ),
-          //   ),
+          //   ],
           // ),
+          GestureDetector(
+            onTap: () async {
+              // show input autocomplete with selected mode
+              // then get the Prediction selected
+              Prediction? p = await PlacesAutocomplete.show(
+                context: context,
+                apiKey: 'AIzaSyB3jDkad-0Rk7QSmaSQHrVKcjR5bJHgkk4',
+                onError: (value) {},
+                mode: Mode.fullscreen,
+                language: "fr",
+                strictbounds: true,
+                types: ['resturants'],
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                components: [Component(Component.country, "fr")],
+              );
+
+              controller.displayPrediction(
+                p!,
+              );
+            },
+            // height: 30,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.grey.shade200,
+              ),
+              child: const TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search...',
+                  //contentPadding: EdgeInsets.all(10.0),
+                  prefixIcon: Icon(
+                    CupertinoIcons.search,
+                    color: Colors.black,
+                    //size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

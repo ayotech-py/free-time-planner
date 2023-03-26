@@ -47,6 +47,15 @@ class ProfileView extends StatelessWidget {
                             ),
                           ),
                           InkWell(
+                            onTap: () {
+                              controller.bottomBankSelection();
+                            },
+                            child: const Icon(Icons.location_on),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          InkWell(
                               onTap: () {
                                 Get.to(() => const EditProfileView());
                               },

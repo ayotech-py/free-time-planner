@@ -139,8 +139,7 @@ class HomeView extends StatelessWidget {
                             onTap: () async {
                               Get.to(() => const HotelAndAccommodationTab());
                             },
-                            child:
-                                gridItem('Hotels and Accommodations', img[13]),
+                            child: gridItem('Lodging', img[13]),
                           ),
                           InkWell(
                             onTap: () async {

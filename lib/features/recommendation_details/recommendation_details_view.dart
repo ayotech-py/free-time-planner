@@ -147,14 +147,14 @@ class RecommendationDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              AppText(
+                            children: [
+                              const AppText(
                                 'Free Time Planner',
                                 fontWeight: FontWeight.w600,
                                 size: 16,
                               ),
                               AppText(
-                                '19 Jan. 2023',
+                                controller.date,
                                 size: 14,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -193,7 +193,8 @@ class RecommendationDetailView extends StatelessWidget {
                         );
                       }
                       return Padding(
-                          padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
                           child: AppText(
                               '''I know you'll love ${place.attractionName} with their pleasing environment and their loving customer service. 
 

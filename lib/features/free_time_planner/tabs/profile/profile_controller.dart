@@ -7,10 +7,12 @@ import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_
 import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
+import 'package:free_time_planner/models/places/province_model.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
 import 'package:free_time_planner/onboarding/authentication/login/login_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
+import 'package:free_time_planner/utils/utils.dart';
 import 'package:geocoding/geocoding.dart';
 
 class ProfileController extends GetxController {
@@ -21,6 +23,7 @@ class ProfileController extends GetxController {
   bool isLoading = true;
   String? currentAddress;
   Position? currentPosition;
+  ProvinceModel selectedProvince = provinces[1];
 
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
 
@@ -55,11 +58,11 @@ class ProfileController extends GetxController {
             .getNewPlaces(
               lat:
                   //'45.50884',
-                  currentUserPosition.lat,
+                  selectedProvince.lat,
               long:
                   //'73.58781',
-                  currentUserPosition.long,
-              type: userData.bio ?? 'tourist_attraction',
+                  selectedProvince.long,
+              type: 'tourist_attraction',
             )
             .then((value) => resturants = value)
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
@@ -187,6 +190,50 @@ class ProfileController extends GetxController {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
+  }
+
+  void bottomBankSelection() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          top: 36.0,
+          bottom: 16.0,
+        ),
+        //color: Colors.white,
+        height: 500,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () async {
+                selectedProvince = provinces[index];
+                update();
+                Get.back();
+                await fetchPlaces();
+              },
+              child: AppText(
+                provinces[index].placeName,
+                size: 22,
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              height: 16.0,
+            );
+          },
+          itemCount: provinces.length,
+        ),
+      ),
+      enableDrag: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50),
+        ),
+      ),
+    );
   }
 
   UserPosition get currentUserPosition => LocalStorage().getUserPosition();
