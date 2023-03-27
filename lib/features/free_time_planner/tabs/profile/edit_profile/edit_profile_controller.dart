@@ -1,7 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../models/user/user_model.dart';
 
@@ -11,18 +16,29 @@ class EditProfileController extends GetxController {
   TextEditingController budgetcontroller = TextEditingController();
   TextEditingController availableFromcontroller = TextEditingController();
   TextEditingController availableTocontroller = TextEditingController();
-
+  final _picker = ImagePicker();
+  final _fireStorage = FirebaseStorage.instance;
   File? pickedImage;
+  String selectedType = 'resturant';
+  FirebaseAnalyticsService analyticsService = FirebaseAnalyticsService();
 
   UserModel userData = UserModel();
   UserAuth userAuth = UserAuth();
   bool inProgress = false;
+  List<String> listoftypes = [
+    "amusement_park",
+    "museum",
+    "park",
+    'museum',
+    "tourist_attraction",
+  ];
 
   @override
   void onInit() async {
     //await Future.delayed(Duration(seconds: 2));
     await user();
     update();
+    analyticsService.logCurrentScreen(name: 'Edit Profile page');
     super.onInit();
   }
 
@@ -42,7 +58,7 @@ class EditProfileController extends GetxController {
       location: userinfo['location'],
     );
     namecontroller.text = userData.fullName ?? "";
-    biocontroller.text = userData.bio ?? "";
+    selectedType = userData.bio ?? "resturant";
     budgetcontroller.text = userData.budget ?? "";
     availableFromcontroller.text = userData.availableFrom ?? "";
     availableTocontroller.text = userData.availableTo ?? "";
@@ -50,7 +66,7 @@ class EditProfileController extends GetxController {
   }
 
   void onUpdate() async {
-    if (biocontroller.text.isEmpty) {
+    if (selectedType.isEmpty) {
       Get.snackbar(
         "Error",
         'Bio cannot be empty',
@@ -64,7 +80,7 @@ class EditProfileController extends GetxController {
         inProgress = true;
         update();
         await userAuth.updateProfile(
-          bio: biocontroller.text,
+          bio: selectedType,
           fullName: namecontroller.text,
           availableFrom: availableFromcontroller.text,
           availableTo: availableTocontroller.text,
@@ -95,17 +111,15 @@ class EditProfileController extends GetxController {
       }
     }
   }
-  //final _picker = ImagePicker();
-  //final _fireStorage = FirebaseStorage.instance;
 
-  /*Future<void> pickImage() async {
+  Future<void> pickImage() async {
     XFile? image;
     image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       pickedImage = File(image.path);
     }
     await uploadImage();
-    await finalUserData();
+    //await finalUserData();
     update();
   }
 
@@ -144,5 +158,48 @@ class EditProfileController extends GetxController {
         );
       }
     }
-  }*/
+  }
+
+  void bottomBankSelection() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          top: 36.0,
+          bottom: 16.0,
+        ),
+        //color: Colors.white,
+        height: 500,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                selectedType = listoftypes[index];
+                update();
+                Get.back();
+              },
+              child: AppText(
+                listoftypes[index],
+                size: 22,
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              height: 16.0,
+            );
+          },
+          itemCount: listoftypes.length,
+        ),
+      ),
+      enableDrag: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50),
+          topRight: Radius.circular(50),
+        ),
+      ),
+    );
+  }
 }

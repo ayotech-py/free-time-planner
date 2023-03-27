@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
@@ -28,6 +26,7 @@ class UserAuth {
       'passWord': password,
       'location': location,
       'avatar': '',
+      'bio': 'tourist_attraction'
     });
   }
 

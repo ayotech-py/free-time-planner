@@ -13,6 +13,23 @@ class SavedTabView extends StatelessWidget {
     return GetBuilder<ProfileController>(
       init: ProfileController(),
       builder: (controller) {
+        if (controller.isLoading) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Center(
+                child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            )),
+          );
+        }
+        if (controller.resturants.isEmpty) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 40.0),
+              child: AppText('No messages'),
+            ),
+          );
+        }
         return GridView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
@@ -28,11 +45,17 @@ class SavedTabView extends StatelessWidget {
             return GestureDetector(
                 onTap: () {
                   Get.to(() => RecommendationDetailView(
-                        image: img[index],
+                        isNetwork: controller
+                            .resturants[index].attractionImages!.isEmpty,
+                        place: controller.resturants[index],
+                        image: controller
+                                .resturants[index].attractionImages!.isEmpty
+                            ? img[5]
+                            : controller.resturants[index].attractionImages![0],
                       ));
                 },
                 child: RecommendationHomeItem(
-                  image: img[index],
+                  nearbyPlace: controller.resturants[index],
                 ));
           },
         );

@@ -1,29 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:free_time_planner/components/avatar.dart';
+import 'package:free_time_planner/features/comment_page/comment_view.dart';
+import 'package:free_time_planner/features/free_time_planner/tabs/recommendations/recommendation_controller.dart';
 import 'package:free_time_planner/features/recommendation_details/recommendation_detail_controller.dart';
+import 'package:free_time_planner/models/places/nearby_places_model.dart';
+import 'package:free_time_planner/models/places/place_user_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:free_time_planner/utils/utils.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RecommendationDetailView extends StatelessWidget {
   final String image;
-  const RecommendationDetailView({super.key, required this.image});
+  final bool isNetwork;
+  final PlaceUserModel place;
+  const RecommendationDetailView(
+      {super.key,
+      required this.image,
+      required this.isNetwork,
+      required this.place});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RecommendationDetailController>(
       init: RecommendationDetailController(),
+      // initState: (state) async {
+      //   await state.controller?.fetchPlaces('');
+      // },
       builder: (controller) {
         return Scaffold(
-          body: SafeArea(
-            top: true,
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: SafeArea(
+              top: true,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
-                      Image.asset(
-                        image,
-                        fit: BoxFit.cover,
-                      ),
+                      isNetwork
+                          ? Image.asset(
+                              image,
+                              fit: BoxFit.cover,
+                            )
+                          : SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: PageView.builder(
+                                itemCount: place.attractionImages!.length,
+                                controller: controller.pageController,
+                                itemBuilder: (context, index) {
+                                  return Image.network(
+                                    place.attractionImages![index],
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  );
+                                },
+                              ),
+                            ),
                       Positioned(
                         left: 10.0,
                         top: 10.0,
@@ -52,14 +85,16 @@ class RecommendationDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               AppText(
-                                'Senato hotel Milano',
+                                place.attractionName ?? 'Free time planner',
+                                //'Senato hotel Milano',
                                 fontWeight: FontWeight.w600,
                                 size: 16,
                               ),
                               AppText(
-                                'Via Senato, Milan, Metropolitan city of Milan, Italy',
+                                place.attractionAddress.toString(),
+                                // 'Via Senato, Milan, Metropolitan city of Milan, Italy',
                                 size: 14,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -71,13 +106,22 @@ class RecommendationDetailView extends StatelessWidget {
                         const SizedBox(
                           width: 8.0,
                         ),
-                        const Icon(Icons.bookmark_add_outlined)
+                        //const Icon(Icons.bookmark_add_outlined)
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: sharingRow(),
+                    child: sharingRow(onContactTap: () {
+                      launchUrlStart(
+                          url: 'tel://${place.internationalPhoneNumber ?? ''}');
+                      print(place.internationalPhoneNumber);
+                    }, onMapTap: () {
+                      MapsLauncher.launchQuery(place.attractionAddress!);
+                      //launchUrlStart(url: controller.place.url ?? '');
+                    }, onWebsiteTap: () {
+                      launchUrlStart(url: 'https://www.booking.com');
+                    }),
                   ),
                   const SizedBox(
                     height: 8.0,
@@ -91,9 +135,10 @@ class RecommendationDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Avatar.medium(
-                          url:
-                              'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
-                        ),
+                            url:
+                                'https://static.vecteezy.com/system/resources/previews/009/131/181/original/ftp-logo-ftp-letter-ftp-letter-logo-design-initials-ftp-logo-linked-with-circle-and-uppercase-monogram-logo-ftp-typography-for-technology-business-and-real-estate-brand-vector.jpg'
+                            //'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                            ),
                         const SizedBox(
                           width: 8.0,
                         ),
@@ -102,14 +147,14 @@ class RecommendationDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              AppText(
+                            children: [
+                              const AppText(
                                 'Free Time Planner',
                                 fontWeight: FontWeight.w600,
                                 size: 16,
                               ),
                               AppText(
-                                '19 Jan. 2023',
+                                controller.date,
                                 size: 14,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -125,21 +170,66 @@ class RecommendationDetailView extends StatelessWidget {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: AppText(
-                        '''I was at first concerned by Bosco Verticale Restaurant‘s lack of real Internet presence, but don’t let their underwhelming Facebook page mislead you: locals love this place. 
-            
-The prices are great, especially for Milan. But more importantly, the food is surprisingly excellent, striking a welcome balance between hearty, creative, and well-executed. It’s also a great place for picky eaters as there are both exotic and more tame offerings for every course.  
-            
-FYI: This restaurant is named after the iconic Bosco Verticale tree skyscraper, which is nearby. It’s a notable landmark in Porto Nuevo. Be sure to check it out before or after your meal! '''),
+                  Builder(
+                    builder: (context) {
+                      if (place.weekdayText!.weekdayText!.isNotEmpty) {
+                        return Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const AppText(
+                                'Acticities',
+                                size: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              ...place.weekdayText!.weekdayText!
+                                  .map((e) => AppText(e))
+                                  .toList()
+                            ],
+                          ),
+                        );
+                      }
+                      return Padding(
+                          padding:
+                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: AppText(
+                              '''I know you'll love ${place.attractionName} with their pleasing environment and their loving customer service. 
+
+You can reach them on ${place.internationalPhoneNumber} or visit them at 
+${place.attractionAddress}.''')
+
+                          //  The prices are great, especially for Milan. But more importantly, the food is surprisingly excellent, striking a welcome balance between hearty, creative, and well-executed. It’s also a great place for picky eaters as there are both exotic and more tame offerings for every course.
+
+                          //FYI: This restaurant is named after the iconic Bosco Verticale tree skyscraper, which is nearby. It’s a notable landmark in Porto Nuevo. Be sure to check it out before or after your meal! ),
+                          );
+                    },
                   ),
+
                   const SizedBox(
                     height: 16.0,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: likeCommentShare(),
+                    child: likeCommentShare(
+                      place: place,
+                      onCommenTap: () {
+                        Get.to(
+                          () => CommentPageView(
+                              commentId: place.reference ?? 'no Id comments'),
+                        );
+                      },
+                      onLikeTap: () {
+                        controller.ratingDialog(place.reference!);
+                      },
+                      onShareTap: () async {
+                        await Share.share(
+                          'Look at ${place.attractionName} it is located at ${place.attractionAddress} and I know you\'ll love it. You can contact them at ${place.internationalPhoneNumber}. Recommendation by Free Time Planner!!!',
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 8.0,
@@ -158,114 +248,144 @@ FYI: This restaurant is named after the iconic Bosco Verticale tree skyscraper, 
   }
 }
 
-Widget sharingRow() {
+Widget sharingRow({
+  required Function() onContactTap,
+  required Function() onWebsiteTap,
+  required Function() onMapTap,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Container(
-        padding: const EdgeInsets.only(
-            top: 8.0, bottom: 8.0, left: 25.0, right: 25.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: AppColors.textFieldBackgroundColor),
-        ),
-        child: Column(
-          children: const [
-            Icon(Icons.exit_to_app),
-            AppText(
-              'Website',
-            ),
-          ],
-        ),
-      ),
-      Container(
-        //width: double.infinity,
-        padding: const EdgeInsets.only(
-            top: 8.0, bottom: 8.0, left: 25.0, right: 25.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: AppColors.textFieldBackgroundColor),
-        ),
-        child: Column(
-          children: const [
-            Icon(Icons.email),
-            AppText(
-              'Contact',
-            ),
-          ],
+      GestureDetector(
+        onTap: onWebsiteTap,
+        child: Container(
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 25.0, right: 25.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: AppColors.textFieldBackgroundColor),
+          ),
+          child: Column(
+            children: const [
+              Icon(Icons.exit_to_app),
+              AppText(
+                'Booking',
+              ),
+            ],
+          ),
         ),
       ),
-      Container(
-        //width: double.infinity,
-        padding: const EdgeInsets.only(
-            top: 8.0, bottom: 8.0, left: 30.0, right: 30.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: AppColors.textFieldBackgroundColor),
+      GestureDetector(
+        onTap: onContactTap,
+        child: Container(
+          //width: double.infinity,
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 25.0, right: 25.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: AppColors.textFieldBackgroundColor),
+          ),
+          child: Column(
+            children: const [
+              Icon(Icons.email),
+              AppText(
+                'Contact',
+              ),
+            ],
+          ),
         ),
-        child: Column(
-          children: const [
-            Icon(Icons.location_on),
-            AppText(
-              'Map',
-            ),
-          ],
+      ),
+      GestureDetector(
+        onTap: onMapTap,
+        child: Container(
+          //width: double.infinity,
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 30.0, right: 30.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: AppColors.textFieldBackgroundColor),
+          ),
+          child: Column(
+            children: const [
+              Icon(Icons.location_on),
+              AppText(
+                'Map',
+              ),
+            ],
+          ),
         ),
       ),
     ],
   );
 }
 
-Widget likeCommentShare() {
+Widget likeCommentShare({
+  required Function() onLikeTap,
+  required Function() onCommenTap,
+  required Function() onShareTap,
+  required PlaceUserModel place,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(CupertinoIcons.heart),
-          SizedBox(
-            width: 3.0,
-          ),
-          AppText(
-            'Like',
-          ),
-        ],
+      GestureDetector(
+        onTap: onLikeTap,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              CupertinoIcons.star_circle_fill,
+              color: AppColors.starColor,
+            ),
+            const SizedBox(
+              width: 3.0,
+            ),
+            AppText(
+              '${place.ratings ?? 4.5}',
+            ),
+          ],
+        ),
       ),
       const SizedBox(
         width: 16.0,
       ),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(CupertinoIcons.chat_bubble),
-          SizedBox(
-            width: 3.0,
-          ),
-          AppText(
-            'Comment',
-          ),
-        ],
+      GestureDetector(
+        onTap: onCommenTap,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(CupertinoIcons.chat_bubble),
+            SizedBox(
+              width: 3.0,
+            ),
+            AppText(
+              'Comment',
+            ),
+          ],
+        ),
       ),
       const SizedBox(
         width: 16.0,
       ),
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(CupertinoIcons.share),
-          SizedBox(
-            width: 3.0,
-          ),
-          AppText(
-            'Share',
-          ),
-        ],
+      GestureDetector(
+        onTap: onShareTap,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(CupertinoIcons.share),
+            SizedBox(
+              width: 3.0,
+            ),
+            AppText(
+              'Share',
+            ),
+          ],
+        ),
       ),
     ],
   );

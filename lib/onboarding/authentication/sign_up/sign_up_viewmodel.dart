@@ -3,9 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:free_time_planner/routes/exports.dart';
-import 'package:free_time_planner/services/user_service/user_auth.dart';
+
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
 class SignUpController extends GetxController {
   final UserAuth userAuth = UserAuth();

@@ -29,22 +29,22 @@ class BottomNavigationView extends StatelessWidget {
                 icon: Icon(CupertinoIcons.home),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.plus_square,
-                ),
-                label: 'Add Recommendation',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(
+              //     CupertinoIcons.plus_square,
+              //   ),
+              //   label: 'Add Recommendation',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(
                   CupertinoIcons.person_add,
                 ),
                 label: 'Profile',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.bell),
-                label: 'Notification',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(CupertinoIcons.bell),
+              //   label: 'Notification',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.search),
                 label: 'Recommendation',

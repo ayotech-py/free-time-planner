@@ -420,10 +420,10 @@ class SignUpView extends StatelessWidget {
                     child: Visibility(
                       visible: controller.inProgress,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.black45,
                         ),
-                        child: Center(
+                        child: const Center(
                           child: CircularProgressIndicator(
                             color: Colors.white,
                           ),

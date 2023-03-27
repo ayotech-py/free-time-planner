@@ -7,24 +7,24 @@ class SplashScreenController extends GetxController
     with GetTickerProviderStateMixin {
   final user = FirebaseAuth.instance.currentUser;
 
-  late AnimationController controller;
-  late Animation<double> animation;
+  // late AnimationController controller;
+  // late Animation<double> animation;
 
   @override
   void dispose() {
-    controller.dispose();
+    //controller.dispose();
     super.dispose();
   }
 
   @override
   void onInit() async {
     super.onInit();
-    controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    final curve =
-        CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
-    animation = Tween<double>(begin: 14, end: 25).animate(curve);
-    controller.repeat();
+    // controller =
+    //     AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    // final curve =
+    //     CurvedAnimation(parent: controller, curve: Curves.bounceInOut);
+    // animation = Tween<double>(begin: 14, end: 25).animate(curve);
+    // controller.repeat();
 
     await Future.delayed(
       const Duration(seconds: 3),
@@ -32,13 +32,30 @@ class SplashScreenController extends GetxController
 
     if (user != null) {
       await Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 1),
       );
       print('Authenticated');
       Get.to(() => const BottomNavigationView());
     } else {
       await Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 1),
+      );
+      Get.to(() => const LoginView());
+      print('Not authenticated');
+    }
+  }
+
+  void onPass() async {
+    super.onInit();
+    if (user != null) {
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+      print('Authenticated');
+      Get.to(() => const BottomNavigationView());
+    } else {
+      await Future.delayed(
+        const Duration(seconds: 1),
       );
       Get.to(() => const LoginView());
       print('Not authenticated');

@@ -1,8 +1,4 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
-import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dart';
-import 'package:free_time_planner/features/recommendation_details/recommendation_details_view.dart';
-import 'package:free_time_planner/onboarding/Intro_screen/intro_screen_view.dart';
+import 'package:free_time_planner/data/local/localstorage.dart';
 import 'package:free_time_planner/onboarding/splash_screen/splash_screen_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +7,8 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage.instance.init();
+  //await PlaceRepoImpl().getNewPlaces();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -20,12 +18,12 @@ void main() async {
 
   runApp(
     //
-    DevicePreview(
+    /*DevicePreview(
       enabled: !kReleaseMode,
       builder: (context) => const MyApp(), // Wrap your app
-    ),
+    ),*/
 
-    //const MyApp(),
+    const MyApp(),
   );
 
   //

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:free_time_planner/models/places/province_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Function That Converts Hex Code To Flutter Recognized Color
@@ -31,6 +32,38 @@ Future<void> launchUrlStart({required String url}) async {
     throw 'Could not launch $url';
   }
 }
+
+List<ProvinceModel> provinces = [
+  ProvinceModel(
+      placeName: 'Saskatchewan Province, Canada',
+      lat: 55.000000,
+      long: -106.000000),
+  ProvinceModel(
+      placeName: 'Prince Edward Island, Canada',
+      lat: 46.250000,
+      long: -63.000000),
+  ProvinceModel(
+    placeName: 'Ontario, Canada',
+    lat: 50.000000,
+    long: -85.000000,
+  ),
+  ProvinceModel(
+      placeName: 'Nova Scotia, Canada', lat: 45.000000, long: -63.000000),
+  ProvinceModel(
+      placeName: 'Alberta, Canada', lat: 55.000000, long: -115.000000),
+  ProvinceModel(
+      placeName: 'British Columbia, Canada', lat: 53.726669, long: -127.647621),
+  ProvinceModel(
+      placeName: 'Manitoba, Canada', lat: 56.415211, long: -98.739075),
+  ProvinceModel(
+      placeName: 'Newfoundland and Labrador, Canada',
+      lat: 53.135509,
+      long: -57.660435),
+  ProvinceModel(
+      placeName: 'New Brunswick, Canada', lat: 46.498390, long: -66.159668),
+  ProvinceModel(
+      placeName: 'Quebec Province, Canada', lat: 53.000000, long: -70.000000),
+];
 
 List<String> img = [
   'assets/images/1.jpg',
@@ -67,4 +100,55 @@ List<String> img = [
   'assets/images/32.jpg',
   'assets/images/33.jpg',
   'assets/images/34.jpg',
+];
+
+List<String> listoftypes = [
+  "accounting",
+  "airport",
+  "amusement_park",
+  "aquarium",
+  "art_gallery",
+  'atm',
+  "bakery",
+  "bank",
+  "bar",
+  "beauty_salon",
+  "bicycle_store",
+  "book_store",
+  "bowling_alley",
+  "bus_station",
+  "cafe",
+  "campground",
+  "car_dealer",
+  "car_rental",
+  "car_repair",
+  "car_wash",
+  "casino",
+  "cemetery",
+  "church",
+  "city_hall",
+  "clothing_store",
+  "convenience_store",
+  "courthouse",
+  "dentist",
+  "department_store",
+  "doctor",
+  "drugstore",
+  "electrician",
+  "electronics_store",
+  "embassy",
+  "fire_station",
+  "florist",
+  "funeral_home",
+  "furniture_store",
+  "gas_station",
+  "gym",
+  "hair_care",
+  "hardware_store",
+  "hindu_temple",
+  "home_goods_store"
+      "hospital"
+      "insurance_agency",
+  "jewelry_store",
+  "laundry"
 ];
