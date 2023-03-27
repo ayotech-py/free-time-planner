@@ -40,16 +40,17 @@ class RecommendationController extends GetxController {
     isLoading = true;
     update();
     try {
+      print(
+          'long ${currentUserPosition.long}, Latitude ${currentUserPosition.lat}');
+
       /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
       await Future.wait([
         placeRepo
             .getByKeyword(
-              lat:
-                  //'45.50884',
-                  currentUserPosition.lat,
-              long:
-                  //'73.58781',
-                  currentUserPosition.long,
+              lat: 45.50884,
+              //currentUserPosition.lat,
+              long: -73.58781,
+              //currentUserPosition.long,
               type: 'tourist_attraction',
               keyword: searchController.text.isEmpty
                   ? 'tour'

@@ -42,7 +42,11 @@ List<ProvinceModel> provinces = [
       placeName: 'Prince Edward Island, Canada',
       lat: 46.250000,
       long: -63.000000),
-  ProvinceModel(placeName: 'Ontario, Canada', lat: 50.000000, long: -85.000000),
+  ProvinceModel(
+    placeName: 'Ontario, Canada',
+    lat: 50.000000,
+    long: -85.000000,
+  ),
   ProvinceModel(
       placeName: 'Nova Scotia, Canada', lat: 45.000000, long: -63.000000),
   ProvinceModel(

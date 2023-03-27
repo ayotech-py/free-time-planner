@@ -24,7 +24,7 @@ class ProfileController extends GetxController {
   bool isLoading = true;
   String? currentAddress;
   Position? currentPosition;
-  ProvinceModel selectedProvince = provinces[1];
+  ProvinceModel selectedProvince = provinces[9];
 
   PlaceRepoImpl placeRepo = PlaceRepoImpl();
 
@@ -62,7 +62,7 @@ class ProfileController extends GetxController {
                   //'45.50884',
                   selectedProvince.lat,
               long:
-                  //'73.58781',
+                  //'-73.58781',
                   selectedProvince.long,
               type: 'tourist_attraction',
             )

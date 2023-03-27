@@ -59,7 +59,7 @@ class RecommendationView extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: 40.0, left: 20.0, right: 20.0),
                             child: AppText(
-                              'No recommendation at the moment, pull to referesh',
+                              'No recommendation at the moment, Search again',
                               alignment: TextAlign.center,
                             ),
                           ),
