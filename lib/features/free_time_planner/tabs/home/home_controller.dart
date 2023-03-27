@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/data/local/localstorage.dart';
-import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
+import 'package:free_time_planner/data/repository/repo_implementation/place_repo_impl.dart';
 import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/position_model.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
