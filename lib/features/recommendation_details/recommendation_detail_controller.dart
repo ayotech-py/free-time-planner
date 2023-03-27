@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
+import 'package:free_time_planner/data/repository/repo_implementation/place_repo_impl.dart';
 import 'package:free_time_planner/models/places/place_model.dart';
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/services/firebase_service.dart';
@@ -30,6 +30,7 @@ class RecommendationDetailController extends GetxController {
     pageController = PageController();
     update();
     analyticsService.logCurrentScreen(name: 'Details page');
+
     super.onInit();
   }
 

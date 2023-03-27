@@ -6,7 +6,7 @@ export 'package:get/get.dart';
 export 'package:free_time_planner/components/app_button.dart';
 export 'package:free_time_planner/components/app_textfield.dart';
 
-export 'package:free_time_planner/data/repository/repo_implementation/chat_repo_impl.dart';
+export 'package:free_time_planner/data/repository/repo_implementation/place_repo_impl.dart';
 
 export 'package:free_time_planner/models/user/user_model.dart';
 

@@ -27,7 +27,7 @@ class LocalStorage {
 
   UserPosition getUserPosition() {
     return appBox.get('userState',
-        defaultValue: UserPosition(long: 8.00, lat: 8.00));
+        defaultValue: UserPosition(long: -73.58781, lat: 45.50884));
   }
 
   // User getUserProfile() {

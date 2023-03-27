@@ -20,10 +20,10 @@ class PlaceRepoImpl {
       //'https://tourist-attraction-api.onrender.com/places/tourist_attraction',
       AppApiConfig.getbyType(),
       data: {
-        "lng": long ?? 73.58781,
+        "lng": long ?? -73.58781,
         "lat": lat ?? 45.50884,
         "type": type,
-        'radius': 1000,
+        'radius': 2000,
       },
     );
     final places = (res.data?['data']['places'] as List);
