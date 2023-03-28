@@ -35,9 +35,7 @@ Future<void> launchUrlStart({required String url}) async {
 
 List<ProvinceModel> provinces = [
   ProvinceModel(
-      placeName: 'Saskatchewan Province, Canada',
-      lat: 55.000000,
-      long: -106.000000),
+      placeName: 'Saskatchewan, Canada', lat: 55.000000, long: -106.000000),
   ProvinceModel(
       placeName: 'Prince Edward Island, Canada',
       lat: 46.250000,
@@ -61,8 +59,7 @@ List<ProvinceModel> provinces = [
       long: -57.660435),
   ProvinceModel(
       placeName: 'New Brunswick, Canada', lat: 46.498390, long: -66.159668),
-  ProvinceModel(
-      placeName: 'Quebec Province, Canada', lat: 53.000000, long: -70.000000),
+  ProvinceModel(placeName: 'Quebec, Canada', lat: 53.000000, long: -70.000000),
 ];
 
 List<String> img = [
