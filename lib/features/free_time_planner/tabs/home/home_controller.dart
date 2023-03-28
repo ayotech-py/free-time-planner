@@ -38,6 +38,7 @@ class HomeController extends GetxController {
     await user();
     await getCurrentPosition();
     analyticsService.logCurrentScreen(name: 'Home page');
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     LocalStorage().setUserState(UserPosition(
         long: currentPosition!.longitude, lat: currentPosition!.latitude));
     print(

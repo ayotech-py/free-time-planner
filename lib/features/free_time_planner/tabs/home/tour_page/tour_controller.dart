@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/data/local/localstorage.dart';
 import 'package:free_time_planner/models/places/nearby_places_model.dart';
 import 'package:free_time_planner/models/places/place_user_model.dart';
@@ -27,6 +28,7 @@ class TourPageController extends GetxController {
     await fetchPlaces();
     update();
     analyticsService.logCurrentScreen(name: 'Tourist page');
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     super.onInit();
   }
 

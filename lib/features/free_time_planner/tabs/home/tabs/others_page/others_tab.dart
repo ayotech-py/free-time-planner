@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/home_controller.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/tabs/others_page/others_controller.dart';
@@ -68,6 +69,10 @@ class OthersTab extends StatelessWidget {
                                   isNetwork: controller
                                       .others[index].attractionImages!.isEmpty,
                                 ));
+                            controller.analyticsService.logCurrentScreen(
+                                name: controller.others[index].attractionName!);
+                            controller.analyticsService.logUserId(
+                                id: FirebaseAuth.instance.currentUser!.uid);
                           },
                           child: RecommendationHomeItem(
                             nearbyPlace: controller.others[index],

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/components/avatar.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 
@@ -218,8 +219,7 @@ class ProfileView extends StatelessWidget {
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 5,
                         ),
-                        itemCount: 8,
-                        //controller.resturants.length,
+                        itemCount: controller.resturants.length,
                         itemBuilder: (BuildContext ctx, index) {
                           return GestureDetector(
                               onTap: () {
@@ -233,6 +233,12 @@ class ProfileView extends StatelessWidget {
                                       isNetwork: controller.resturants[index]
                                           .attractionImages!.isEmpty,
                                     ));
+
+                                controller.analyticsService.logCurrentScreen(
+                                    name: controller
+                                        .resturants[index].attractionName!);
+                                controller.analyticsService.logUserId(
+                                    id: FirebaseAuth.instance.currentUser!.uid);
                               },
                               child: RecommendationHomeItem(
                                 nearbyPlace: controller.resturants[index],

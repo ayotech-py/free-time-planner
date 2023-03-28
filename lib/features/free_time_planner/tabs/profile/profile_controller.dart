@@ -45,6 +45,7 @@ class ProfileController extends GetxController {
     await user();
     await fetchPlaces();
     analyticsService.logCurrentScreen(name: 'Profile page');
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     update();
     super.onInit();
   }
@@ -57,14 +58,8 @@ class ProfileController extends GetxController {
       /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
       await Future.wait([
         placeRepo
-            .getNewPlaces(
-              lat:
-                  //'45.50884',
-                  selectedProvince.lat,
-              long:
-                  //'-73.58781',
-                  selectedProvince.long,
-              type: 'tourist_attraction',
+            .getByProvince(
+              keyword: selectedProvince.placeName,
             )
             .then((value) => resturants = value)
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),

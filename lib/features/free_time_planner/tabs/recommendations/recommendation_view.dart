@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:free_time_planner/components/recommendation_home_item.dart';
@@ -90,6 +91,11 @@ class RecommendationView extends StatelessWidget {
                                           .attractionImages!.isEmpty,
                                       place: controller.resturants[index],
                                     ));
+                                controller.analyticsService.logCurrentScreen(
+                                    name: controller
+                                        .resturants[index].attractionName!);
+                                controller.analyticsService.logUserId(
+                                    id: FirebaseAuth.instance.currentUser!.uid);
                               },
                               child: RecommendationHomeItem(
                                 nearbyPlace: controller.resturants[index],

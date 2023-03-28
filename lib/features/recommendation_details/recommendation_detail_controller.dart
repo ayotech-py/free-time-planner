@@ -31,6 +31,8 @@ class RecommendationDetailController extends GetxController {
     update();
     analyticsService.logCurrentScreen(name: 'Details page');
 
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
+
     super.onInit();
   }
 

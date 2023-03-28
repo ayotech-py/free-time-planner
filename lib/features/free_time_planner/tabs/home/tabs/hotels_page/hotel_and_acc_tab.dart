@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/home_controller.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/tabs/hotels_page/hotels_and_acc_controller.dart';
@@ -76,6 +77,11 @@ class HotelAndAccommodationTab extends StatelessWidget {
                                             .hotels[index].attractionImages![0],
                                   ),
                                 );
+                                controller.analyticsService.logCurrentScreen(
+                                    name: controller
+                                        .hotels[index].attractionName!);
+                                controller.analyticsService.logUserId(
+                                    id: FirebaseAuth.instance.currentUser!.uid);
                               },
                               child: RecommendationHomeItem(
                                 nearbyPlace: controller.hotels[index],

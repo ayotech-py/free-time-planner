@@ -39,6 +39,7 @@ class EditProfileController extends GetxController {
     await user();
     update();
     analyticsService.logCurrentScreen(name: 'Edit Profile page');
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     super.onInit();
   }
 

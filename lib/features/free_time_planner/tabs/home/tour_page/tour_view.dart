@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/home_controller.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/tour_page/tour_controller.dart';
@@ -68,6 +69,10 @@ class TourTab extends StatelessWidget {
                                   isNetwork: controller
                                       .tour[index].attractionImages!.isEmpty,
                                 ));
+                            controller.analyticsService.logCurrentScreen(
+                                name: controller.tour[index].attractionName!);
+                            controller.analyticsService.logUserId(
+                                id: FirebaseAuth.instance.currentUser!.uid);
                           },
                           child: RecommendationHomeItem(
                             nearbyPlace: controller.tour[index],

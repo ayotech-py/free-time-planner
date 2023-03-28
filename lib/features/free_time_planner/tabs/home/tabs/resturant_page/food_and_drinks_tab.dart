@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/components/recommendation_home_item.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/home_controller.dart';
 import 'package:free_time_planner/features/free_time_planner/tabs/home/tabs/resturant_page/food_and_drink_controller.dart';
@@ -68,6 +69,11 @@ class FoodAndDrinks extends StatelessWidget {
                                   isNetwork: controller.resturants[index]
                                       .attractionImages!.isEmpty,
                                 ));
+                            controller.analyticsService.logCurrentScreen(
+                                name: controller
+                                    .resturants[index].attractionName!);
+                            controller.analyticsService.logUserId(
+                                id: FirebaseAuth.instance.currentUser!.uid);
                           },
                           child: RecommendationHomeItem(
                             nearbyPlace: controller.resturants[index],

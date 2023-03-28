@@ -54,6 +54,10 @@ class AppApiConfig {
     return _newAppUri("/places/keyword_search");
   }
 
+  static Uri getbyProvince() {
+    return _newAppUri("/places/province_search");
+  }
+
   /* static Uri getAllContactMessages() {
     return _appUri(
       "/api/contacts",

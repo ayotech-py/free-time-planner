@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:free_time_planner/data/local/localstorage.dart';
 
@@ -32,6 +33,7 @@ class RecommendationController extends GetxController {
     await fetchPlaces();
     update();
     analyticsService.logCurrentScreen(name: 'Search page');
+    analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     super.onInit();
   }
 
