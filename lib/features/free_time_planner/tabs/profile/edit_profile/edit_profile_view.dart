@@ -82,7 +82,7 @@ class EditProfileView extends StatelessWidget {
                   textAndTextField(
                     controller: controller.namecontroller,
                     formName: 'Enter your name',
-                    hintText: 'Kelvin Nate',
+                    hintText: 'Arash',
                   ),
                   const SizedBox(
                     height: 16.0,
@@ -159,7 +159,7 @@ class EditProfileView extends StatelessWidget {
                   //   ),
                   // ),
                   const SizedBox(
-                    height: 24.0,
+                    height: 16.0,
                   ),
                   AppButton(
                     width: double.infinity,
