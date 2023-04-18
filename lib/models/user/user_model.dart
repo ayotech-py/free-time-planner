@@ -9,6 +9,7 @@ class UserModel {
   final String? passWord;
   final String? avatar;
   final String? budget;
+  final String? country;
   final String? availableFrom;
   final String? availableTo;
 
@@ -21,6 +22,7 @@ class UserModel {
     this.avatar,
     this.bio,
     this.budget,
+    this.country,
     this.availableFrom,
     this.availableTo,
   });
@@ -35,6 +37,7 @@ class UserModel {
       passWord: map['passWord'],
       age: map['age'],
       budget: map['budget'] ?? '',
+      country: map['country'] ?? '',
       availableFrom: map['availableFrom'] ?? "",
       availableTo: map['availableTo'] ?? '',
     );

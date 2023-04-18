@@ -7,6 +7,10 @@ import 'package:free_time_planner/features/recommendation_details/recommendation
 import 'package:free_time_planner/routes/exports.dart';
 import 'package:free_time_planner/utils/utils.dart';
 
+import 'package:http/http.dart' as https;
+import 'dart:convert';
+import 'package:flutter/material.dart';
+
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});
 
@@ -55,12 +59,13 @@ class RecommendationView extends StatelessWidget {
                         );
                       }
                       if (controller.resturants.isEmpty) {
+                        print(controller.resturants);
                         return const Center(
                           child: Padding(
                             padding: EdgeInsets.only(
                                 top: 40.0, left: 20.0, right: 20.0),
                             child: AppText(
-                              'No recommendation at the moment, Search again',
+                              'No recommendation for you at the monent, please try again later',
                               alignment: TextAlign.center,
                             ),
                           ),
@@ -82,13 +87,13 @@ class RecommendationView extends StatelessWidget {
                           return GestureDetector(
                               onTap: () {
                                 Get.to(() => RecommendationDetailView(
-                                      image: controller.resturants[index]
-                                              .attractionImages!.isEmpty
+                                      image: controller
+                                              .resturants[index].about!.isEmpty
                                           ? img[9]
-                                          : controller.resturants[index]
-                                              .attractionImages![0],
-                                      isNetwork: controller.resturants[index]
-                                          .attractionImages!.isEmpty,
+                                          : controller
+                                              .resturants[index].about![0],
+                                      isNetwork: controller
+                                          .resturants[index].about!.isEmpty,
                                       place: controller.resturants[index],
                                     ));
                                 controller.analyticsService.logCurrentScreen(
@@ -199,7 +204,17 @@ class SearchAndtext extends StatelessWidget {
               color: Colors.grey.shade200,
             ),
             child: TextField(
-              onSubmitted: (value) async {
+              onSubmitted:
+                  (value) /* async {
+                await https.post(
+                  Uri.parse(
+                      'https://touristattractionapi-production.up.railway.app/places/tourist_search/'),
+                  headers: {'Content-Type': 'application/json'},
+                  body: json.encode({'keyword': searchController.text}),
+                );
+              }, */
+
+                  async {
                 await controller.fetchPlaces();
                 controller.analyticsService
                     .logSearch(query: searchController.text);

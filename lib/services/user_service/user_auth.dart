@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/models/user/user_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class UserAuth {
   final _firestore = FirebaseFirestore.instance;
@@ -35,6 +36,7 @@ class UserAuth {
     required String bio,
     required String fullName,
     required String budget,
+    required String country,
     required String availableTo,
     required String availableFrom,
   }) async {
@@ -45,6 +47,7 @@ class UserAuth {
       'fullName': fullName,
       'bio': bio,
       'budget': budget,
+      'country': country,
       'availableFrom': availableFrom,
       'availableTo': availableTo
     });
@@ -92,6 +95,31 @@ class UserAuth {
       },
       onError: (e) => print("Error getting document: $e"),
     );
+    return userData;
+  }
+
+  Future getUserSearch() async {
+    final docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('resent search');
+
+    final querySnapshot = await docRef.get();
+
+    final searchlist = querySnapshot.docs.map((e) => e.data()).toList();
+    return searchlist;
+    //print(docRef);
+    /* final userData = docRef.listen((event) {
+      event.docs.map((e) => docRef.toList());
+    }); */
+    //return docRef;
+    /* final userData = docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data();
+        return data;
+      }, */
+
+    //onError: (e) => print("Error getting search history: $e"),
     return userData;
   }
 }

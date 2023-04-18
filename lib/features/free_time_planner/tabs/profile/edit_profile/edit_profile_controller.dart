@@ -14,6 +14,7 @@ class EditProfileController extends GetxController {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController biocontroller = TextEditingController();
   TextEditingController budgetcontroller = TextEditingController();
+  TextEditingController countrycontroller = TextEditingController();
   TextEditingController availableFromcontroller = TextEditingController();
   TextEditingController availableTocontroller = TextEditingController();
   final _picker = ImagePicker();
@@ -54,6 +55,7 @@ class EditProfileController extends GetxController {
       age: userinfo['age'],
       bio: userinfo['bio'] ?? '',
       budget: userinfo['budget'] ?? '',
+      country: userinfo['country'] ?? '',
       availableFrom: userinfo['availableFrom'] ?? '',
       availableTo: userinfo['availableTo'] ?? '',
       location: userinfo['location'],
@@ -61,6 +63,7 @@ class EditProfileController extends GetxController {
     namecontroller.text = userData.fullName ?? "";
     selectedType = userData.bio ?? "resturant";
     budgetcontroller.text = userData.budget ?? "";
+    countrycontroller.text = userData.country ?? "";
     availableFromcontroller.text = userData.availableFrom ?? "";
     availableTocontroller.text = userData.availableTo ?? "";
     update();
@@ -86,6 +89,7 @@ class EditProfileController extends GetxController {
           availableFrom: availableFromcontroller.text,
           availableTo: availableTocontroller.text,
           budget: budgetcontroller.text,
+          country: countrycontroller.text,
         );
         Get.back();
         inProgress = false;

@@ -65,6 +65,8 @@ class ProfileController extends GetxController {
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
         //chatRepo .getAllReadContacts(currentUser!.token).then((value) => allReadContactList = value)
       ]);
+      print("restuarant wan print o");
+      print(resturants);
     } on Exception catch (e) {
       //This will show whenever there's issue with any of the api
       Get.snackbar(
@@ -93,6 +95,7 @@ class ProfileController extends GetxController {
       age: userinfo['age'],
       bio: userinfo['bio'] ?? '',
       budget: userinfo['budget'] ?? '',
+      country: userinfo['country'] ?? '',
       availableFrom: userinfo['availableFrom'] ?? '',
       availableTo: userinfo['availableTo'] ?? '',
       location: userinfo['location'],

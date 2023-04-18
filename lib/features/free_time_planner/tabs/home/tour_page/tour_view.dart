@@ -61,13 +61,11 @@ class TourTab extends StatelessWidget {
                           onTap: () {
                             Get.to(() => RecommendationDetailView(
                                   place: controller.tour[index],
-                                  image: controller
-                                          .tour[index].attractionImages!.isEmpty
+                                  image: controller.tour[index].about!.isEmpty
                                       ? img[5]
-                                      : controller
-                                          .tour[index].attractionImages![0],
-                                  isNetwork: controller
-                                      .tour[index].attractionImages!.isEmpty,
+                                      : controller.tour[index].about![0],
+                                  isNetwork:
+                                      controller.tour[index].about!.isEmpty,
                                 ));
                             controller.analyticsService.logCurrentScreen(
                                 name: controller.tour[index].attractionName!);

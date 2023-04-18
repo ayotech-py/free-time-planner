@@ -46,11 +46,11 @@ class RecommendationDetailView extends StatelessWidget {
                           : SizedBox(
                               height: MediaQuery.of(context).size.height * 0.4,
                               child: PageView.builder(
-                                itemCount: place.attractionImages!.length,
+                                itemCount: place.about!.length,
                                 controller: controller.pageController,
                                 itemBuilder: (context, index) {
                                   return Image.network(
-                                    place.attractionImages![index],
+                                    place.about.toString(),
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                   );
@@ -113,9 +113,8 @@ class RecommendationDetailView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: sharingRow(onContactTap: () {
-                      launchUrlStart(
-                          url: 'tel://${place.internationalPhoneNumber ?? ''}');
-                      print(place.internationalPhoneNumber);
+                      launchUrlStart(url: 'tel://${place.about ?? ''}');
+                      print(place.about);
                     }, onMapTap: () {
                       MapsLauncher.launchQuery(place.attractionAddress!);
                       //launchUrlStart(url: controller.place.url ?? '');
@@ -172,7 +171,7 @@ class RecommendationDetailView extends StatelessWidget {
                   ),
                   Builder(
                     builder: (context) {
-                      if (place.weekdayText!.weekdayText!.isNotEmpty) {
+                      if (place.about!.isNotEmpty) {
                         return Padding(
                           padding:
                               const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -181,13 +180,11 @@ class RecommendationDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const AppText(
-                                'Acticities',
+                                'Activities',
                                 size: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                              ...place.weekdayText!.weekdayText!
-                                  .map((e) => AppText(e))
-                                  .toList()
+                              AppText(place.attractionTypes!)
                             ],
                           ),
                         );
@@ -198,7 +195,7 @@ class RecommendationDetailView extends StatelessWidget {
                           child: AppText(
                               '''I know you'll love ${place.attractionName} with their pleasing environment and their loving customer service. 
 
-You can reach them on ${place.internationalPhoneNumber} or visit them at 
+You can reach them on ${place.about} or visit them at 
 ${place.attractionAddress}.''')
 
                           //  The prices are great, especially for Milan. But more importantly, the food is surprisingly excellent, striking a welcome balance between hearty, creative, and well-executed. It’s also a great place for picky eaters as there are both exotic and more tame offerings for every course.
@@ -218,15 +215,15 @@ ${place.attractionAddress}.''')
                       onCommenTap: () {
                         Get.to(
                           () => CommentPageView(
-                              commentId: place.reference ?? 'no Id comments'),
+                              commentId: place.about ?? 'no Id comments'),
                         );
                       },
                       onLikeTap: () {
-                        controller.ratingDialog(place.reference!);
+                        controller.ratingDialog(place.about!);
                       },
                       onShareTap: () async {
                         await Share.share(
-                          'Look at ${place.attractionName} it is located at ${place.attractionAddress} and I know you\'ll love it. You can contact them at ${place.internationalPhoneNumber}. Recommendation by Free Time Planner!!!',
+                          'Look at ${place.attractionName} it is located at ${place.attractionAddress} and I know you\'ll love it. You can contact them at ${place.about}. Recommendation by Free Time Planner!!!',
                         );
                       },
                     ),

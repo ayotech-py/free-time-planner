@@ -36,6 +36,7 @@ class RecommendationTab extends StatelessWidget {
                     );
                   }
                   if (controller.all.isEmpty) {
+                    print('No place found alaye');
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: 40.0),
@@ -61,13 +62,11 @@ class RecommendationTab extends StatelessWidget {
                           onTap: () {
                             Get.to(() => RecommendationDetailView(
                                   place: controller.all[index],
-                                  image: controller
-                                          .all[index].attractionImages!.isEmpty
-                                      ? img[5]
-                                      : controller
-                                          .all[index].attractionImages![0],
-                                  isNetwork: controller
-                                      .all[index].attractionImages!.isEmpty,
+                                  image: controller.all[index].about!.isEmpty
+                                      ? img[3]
+                                      : controller.all[index].about![0],
+                                  isNetwork:
+                                      controller.all[index].about!.isEmpty,
                                 ));
                             controller.analyticsService.logCurrentScreen(
                                 name: controller.all[index].attractionName!);

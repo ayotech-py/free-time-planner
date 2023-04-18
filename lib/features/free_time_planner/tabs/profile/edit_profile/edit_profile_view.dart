@@ -95,6 +95,13 @@ class EditProfileView extends StatelessWidget {
                     height: 16.0,
                   ),
                   textAndTextField(
+                      controller: controller.countrycontroller,
+                      formName: 'Desired Location',
+                      hintText: 'Canada'),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  textAndTextField(
                       controller: controller.availableFromcontroller,
                       formName: 'Available from',
                       hintText: 'Enter time in 24hours e.g 12:00'),

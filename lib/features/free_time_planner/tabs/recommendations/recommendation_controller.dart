@@ -1,4 +1,5 @@
-import 'dart:developer';
+import 'dart:developer' show log;
+import 'dart:math' show Random;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -44,21 +45,33 @@ class RecommendationController extends GetxController {
     try {
       print(
           'long ${currentUserPosition.long}, Latitude ${currentUserPosition.lat}');
+      UserAuth userAuth = UserAuth();
 
-      /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
+      final userinfo = await userAuth.getUserData();
+      final userSearch = await userAuth.getUserSearch();
+
+      final country = userinfo['country'];
+      //final country = 'Montreal';
+      final random = Random();
+      final search =
+          userSearch[random.nextInt(userSearch.length)]['search text'];
+
+      print(search);
+
       await Future.wait([
         placeRepo
-            .getByKeyword(
+            .getBySearch(
               lat: 45.50884,
               //currentUserPosition.lat,
               long: -73.58781,
               //currentUserPosition.long,
               type: 'tourist_attraction',
               keyword: searchController.text.isEmpty
-                  ? 'tour'
+                  ? search
                   : searchController.text,
             )
             .then((value) => resturants = value)
+
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
         //chatRepo .getAllReadContacts(currentUser!.token).then((value) => allReadContactList = value)
       ]);

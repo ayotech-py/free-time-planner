@@ -25,7 +25,6 @@ class NearbyPlaces {
     this.rating,
     this.reference,
     this.types,
-    this.userRatingsTotal,
   });
 
   String? businessStatus;
@@ -42,7 +41,6 @@ class NearbyPlaces {
   double? rating;
   String? reference;
   List<String>? types;
-  int? userRatingsTotal;
 
   factory NearbyPlaces.fromMap(Map<String, dynamic>? json) => NearbyPlaces(
         businessStatus: json?["business_status"],
@@ -58,7 +56,6 @@ class NearbyPlaces {
         plusCode: PlusCode.fromMap(json?["plus_code"]),
         reference: json?["reference"],
         types: List<String>.from(json?["types"].map((x) => x)),
-        userRatingsTotal: json?["user_ratings_total"],
         rating: double.parse(json!["rating"].toString()),
       );
 
@@ -77,7 +74,6 @@ class NearbyPlaces {
         "rating": rating,
         "reference": reference,
         "types": List<dynamic>.from(types!.map((x) => x)),
-        "user_ratings_total": userRatingsTotal,
       };
 }
 

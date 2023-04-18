@@ -45,13 +45,11 @@ class SavedTabView extends StatelessWidget {
             return GestureDetector(
                 onTap: () {
                   Get.to(() => RecommendationDetailView(
-                        isNetwork: controller
-                            .resturants[index].attractionImages!.isEmpty,
+                        isNetwork: controller.resturants[index].about!.isEmpty,
                         place: controller.resturants[index],
-                        image: controller
-                                .resturants[index].attractionImages!.isEmpty
+                        image: controller.resturants[index].about!.isEmpty
                             ? img[5]
-                            : controller.resturants[index].attractionImages![0],
+                            : controller.resturants[index].about![0],
                       ));
                 },
                 child: RecommendationHomeItem(

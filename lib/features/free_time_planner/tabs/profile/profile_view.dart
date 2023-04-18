@@ -225,13 +225,11 @@ class ProfileView extends StatelessWidget {
                               onTap: () {
                                 Get.to(() => RecommendationDetailView(
                                       place: controller.resturants[index],
-                                      image: controller.resturants[index]
-                                              .attractionImages!.isEmpty
-                                          ? img[5]
-                                          : controller.resturants[index]
-                                              .attractionImages![0],
-                                      isNetwork: controller.resturants[index]
-                                          .attractionImages!.isEmpty,
+                                      image: controller.resturants[index].about
+                                          .toString(),
+                                      //coming
+                                      isNetwork: controller
+                                          .resturants[index].about!.isEmpty,
                                     ));
 
                                 controller.analyticsService.logCurrentScreen(

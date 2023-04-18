@@ -61,13 +61,11 @@ class OthersTab extends StatelessWidget {
                           onTap: () {
                             Get.to(() => RecommendationDetailView(
                                   place: controller.others[index],
-                                  image: controller.others[index]
-                                          .attractionImages!.isEmpty
+                                  image: controller.others[index].about!.isEmpty
                                       ? img[5]
-                                      : controller
-                                          .others[index].attractionImages![0],
-                                  isNetwork: controller
-                                      .others[index].attractionImages!.isEmpty,
+                                      : controller.others[index].about![0],
+                                  isNetwork:
+                                      controller.others[index].about!.isEmpty,
                                 ));
                             controller.analyticsService.logCurrentScreen(
                                 name: controller.others[index].attractionName!);

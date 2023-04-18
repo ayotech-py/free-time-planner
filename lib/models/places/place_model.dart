@@ -83,7 +83,6 @@ class Place {
     this.takeout,
     //this.types,
     this.url,
-    this.userRatingsTotal,
     this.utcOffset,
     this.vicinity,
   });
@@ -120,7 +119,6 @@ class Place {
   bool? takeout;
   //List<String>? types;
   String? url;
-  int? userRatingsTotal;
   int? utcOffset;
   String? vicinity;
 
@@ -158,7 +156,6 @@ class Place {
         takeout: json?["takeout"],
         //types: List<String>.from(json?["types"].map((x) => x)),
         url: json?["url"],
-        userRatingsTotal: json?["user_ratings_total"],
         utcOffset: json?["utc_offset"],
         vicinity: json?["vicinity"],
       );
@@ -196,7 +193,6 @@ class Place {
         "takeout": takeout,
         //"types": List<dynamic>.from(types!.map((x) => x)),
         "url": url,
-        "user_ratings_total": userRatingsTotal,
         "utc_offset": utcOffset,
         "vicinity": vicinity,
       };

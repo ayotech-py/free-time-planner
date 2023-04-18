@@ -68,13 +68,12 @@ class HotelAndAccommodationTab extends StatelessWidget {
                                 Get.to(
                                   () => RecommendationDetailView(
                                     place: controller.hotels[index],
-                                    isNetwork: controller.hotels[index]
-                                        .attractionImages!.isEmpty,
-                                    image: controller.hotels[index]
-                                            .attractionImages!.isEmpty
+                                    isNetwork:
+                                        controller.hotels[index].about!.isEmpty,
+                                    image: controller
+                                            .hotels[index].about!.isEmpty
                                         ? img[5]
-                                        : controller
-                                            .hotels[index].attractionImages![0],
+                                        : controller.hotels[index].about![0],
                                   ),
                                 );
                                 controller.analyticsService.logCurrentScreen(

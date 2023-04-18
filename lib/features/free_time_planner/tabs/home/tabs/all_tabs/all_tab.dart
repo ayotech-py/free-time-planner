@@ -48,10 +48,8 @@ class AllTabView extends StatelessWidget {
                 onTap: () {
                   Get.to(() => RecommendationDetailView(
                         place: place,
-                        isNetwork: place.attractionImages!.isEmpty,
-                        image: place.attractionImages!.isEmpty
-                            ? img[5]
-                            : place.attractionImages![0],
+                        isNetwork: place.about!.isEmpty,
+                        image: place.about!.isEmpty ? img[5] : place.about![0],
                       ));
                 },
                 child: RecommendationHomeItem(

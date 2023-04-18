@@ -4,12 +4,13 @@ class AppApiConfig {
   //static const host = "wp.jithvar.com";
 
   ///Live endpoint
-  static const scheme = "https";
+  static const scheme = "http";
   static const host = "gmaps-places-api.onrender.com";
   //static const _version = "/dev/chat";
 
   static const newscheme = "https";
-  static const newhost = "tourist-attraction-api.onrender.com";
+  //static const newhost = "tourist-attraction-api.onrender.com";
+  static const newhost = "touristattractionapi-production.up.railway.app";
 
   static Uri _appUri(String endpoint, [Map<String, String>? query]) {
     return Uri(
@@ -43,19 +44,19 @@ class AppApiConfig {
   }
 
   static Uri getNewPlaces() {
-    return _newAppUri("/places/textsearch");
+    return _newAppUri("/places/tourist_search");
   }
 
   static Uri getbyType() {
-    return _newAppUri("/places/type_search");
+    return _newAppUri("/places/tourist_search");
   }
 
   static Uri getbyKeyword() {
-    return _newAppUri("/places/keyword_search");
+    return _newAppUri("/places/tourist_search/");
   }
 
   static Uri getbyProvince() {
-    return _newAppUri("/places/province_search");
+    return _newAppUri("/places/tourist_search/");
   }
 
   /* static Uri getAllContactMessages() {

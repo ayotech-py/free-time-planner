@@ -20,7 +20,7 @@ class RecommendationHomeItem extends StatelessWidget {
         children: [
           Container(
             //height: 150,
-            child: nearbyPlace.attractionImages!.isEmpty
+            child: nearbyPlace.about!.isEmpty
                 ? Image.asset(
                     img[20],
                     height: 130,
@@ -28,7 +28,7 @@ class RecommendationHomeItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : CachedNetworkImage(
-                    imageUrl: nearbyPlace.attractionImages![0],
+                    imageUrl: nearbyPlace.about.toString(),
                     placeholder: (context, url) => const Padding(
                       padding: EdgeInsets.all(20.0),
                       child: CircularProgressIndicator(),
@@ -49,7 +49,7 @@ class RecommendationHomeItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0),
             child: AppText(
-              nearbyPlace.attractionName!,
+              nearbyPlace.attractionName ?? "E no show",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               size: 16,
