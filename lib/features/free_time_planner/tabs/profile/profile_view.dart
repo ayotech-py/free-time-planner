@@ -101,7 +101,7 @@ class ProfileView extends StatelessWidget {
                       children: [
                         Icon(Icons.location_on),
                         AppText(
-                          controller.userData.location ?? 'Montreal, Canada',
+                          controller.userData.country ?? 'Montreal, Canada',
                           size: 16,
                           fontWeight: FontWeight.w600,
                         ),

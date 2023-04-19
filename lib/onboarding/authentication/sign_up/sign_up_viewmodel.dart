@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:geocoding/geocoding.dart';
 
@@ -141,6 +142,7 @@ class SignUpController extends GetxController {
           location: currentAddress ?? 'no address',
         );
         await getCurrentPosition();
+        await requestPermission();
         FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -279,5 +281,27 @@ class SignUpController extends GetxController {
     }).catchError((e) {
       debugPrint(e);
     });
+  }
+
+  Future<bool> requestPermission() async {
+    print('Storage permission dey read');
+    var status = await Permission.storage.request();
+    if (status.isDenied || status.isPermanentlyDenied) {
+      // Show an alert dialog to the user explaining why you need permission
+      // and how to grant it manually.
+      Get.snackbar(
+        "Error",
+        'Location services are disabled. Please enable the services',
+        dismissDirection: DismissDirection.horizontal,
+        colorText: Colors.white,
+        backgroundColor: AppColors.appRed,
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    } else if (status.isGranted) {
+      // Permission is granted, continue with retrieving the Chrome history.
+      return true;
+    }
+    return false;
   }
 }

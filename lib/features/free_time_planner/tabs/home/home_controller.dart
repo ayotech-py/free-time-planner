@@ -13,6 +13,7 @@ import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HomeController extends GetxController {
   int tabIndex = 0;
@@ -37,6 +38,8 @@ class HomeController extends GetxController {
     //await Future.delayed(Duration(seconds: 2));
     await user();
     await getCurrentPosition();
+    await requestPermission();
+    await getBrowserHistory();
     analyticsService.logCurrentScreen(name: 'Home page');
     analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     LocalStorage().setUserState(UserPosition(
@@ -125,6 +128,7 @@ class HomeController extends GetxController {
       passWord: userinfo['passWord'],
       age: userinfo['age'],
       location: userinfo['location'],
+      country: userinfo['country'],
     );
     update();
   }
@@ -185,6 +189,37 @@ class HomeController extends GetxController {
       return false;
     }
     return true;
+  }
+
+  Future<bool> requestPermission() async {
+    print('Storage permission dey read');
+    var status = await Permission.storage.request();
+    if (status.isDenied || status.isPermanentlyDenied) {
+      // Show an alert dialog to the user explaining why you need permission
+      // and how to grant it manually.
+      Get.snackbar(
+        "Error",
+        'Storage permission are disabled. Please enable the services',
+        dismissDirection: DismissDirection.horizontal,
+        colorText: Colors.white,
+        backgroundColor: AppColors.appRed,
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    } else if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    } else if (status.isGranted) {
+      // Permission is granted, continue with retrieving the Chrome history.
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> getBrowserHistory() async {
+    final hasStoragePermission = await requestPermission();
+
+    if (!hasStoragePermission) return;
+    print('storage permission granted');
   }
 
   Future<void> getCurrentPosition() async {

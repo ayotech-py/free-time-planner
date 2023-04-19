@@ -36,6 +36,7 @@ class CommentController extends GetxController {
       passWord: userinfo['passWord'],
       age: userinfo['age'],
       location: userinfo['location'],
+      country: userinfo['country'],
     );
     update();
   }

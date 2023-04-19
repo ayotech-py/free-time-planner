@@ -15,6 +15,7 @@ import 'package:free_time_planner/services/firebase_service.dart';
 import 'package:free_time_planner/services/user_service/user_auth.dart';
 import 'package:free_time_planner/utils/utils.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileController extends GetxController {
   UserModel userData = UserModel();
@@ -44,10 +45,33 @@ class ProfileController extends GetxController {
     //     'long ${currentPosition!.longitude}, Latitude ${currentPosition!.latitude}');
     await user();
     await fetchPlaces();
+    await requestPermission();
     analyticsService.logCurrentScreen(name: 'Profile page');
     analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
     update();
     super.onInit();
+  }
+
+  Future<bool> requestPermission() async {
+    print('Storage permission dey read');
+    var status = await Permission.storage.request();
+    if (status.isDenied || status.isPermanentlyDenied) {
+      // Show an alert dialog to the user explaining why you need permission
+      // and how to grant it manually.
+      Get.snackbar(
+        "Error",
+        'Location services are disabled. Please enable the services',
+        dismissDirection: DismissDirection.horizontal,
+        colorText: Colors.white,
+        backgroundColor: AppColors.appRed,
+        snackPosition: SnackPosition.TOP,
+      );
+      return false;
+    } else if (status.isGranted) {
+      // Permission is granted, continue with retrieving the Chrome history.
+      return true;
+    }
+    return false;
   }
 
   //This initializes and fetch the contacts from the api

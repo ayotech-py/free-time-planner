@@ -74,6 +74,7 @@ class UserAuth {
       passWord: userinfo['passWord'],
       age: userinfo['age'],
       location: userinfo['location'],
+      country: userinfo['country'],
     );
     return user;
   }
