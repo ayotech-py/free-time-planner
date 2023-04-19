@@ -1,13 +1,15 @@
-import 'dart:async';
+/* import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 class SearchHistoryFetcher {
-  Future<List<String>> fetch() async {
+  Future<List<String>> fetch(BuildContext context) async {
     final completer = Completer<List<String>>();
 
     final webView = WebView(
-      initialUrl: 'assets/search_history.html',
+      initialUrl: 'about:blank',
       javascriptMode: JavascriptMode.unrestricted,
       javascriptChannels: <JavascriptChannel>[
         JavascriptChannel(
@@ -21,41 +23,50 @@ class SearchHistoryFetcher {
     );
 
     final controller = Completer<WebViewController>();
-    final subscription = webView.onWebViewCreated.listen((webViewController) {
-      controller.complete(webViewController);
+    final subscription =
+        webView.navigationDelegate.onPageFinished.listen((_) async {
+      final webViewController = await controller.future;
+      final response = await webViewController.runJavaScript('''
+        chrome.history.search({text: '', maxResults: 1000}, function(results) {
+          var keywords = [];
+          for (var i = 0; i < results.length; i++) {
+            if (results[i].title != null) {
+              keywords.push(results[i].title);
+            }
+          }
+          window.SearchHistoryChannel.postMessage(JSON.stringify(keywords));
+        });
+      ''');
     });
 
     final url =
         'data:text/html;base64,${base64Encode(Utf8Encoder().convert(_html))}';
-    await webView.loadUrlRequest(
-      NavigationRequest(
-        url: url,
-        headers: {
-          'Content-Type': 'text/html',
-        },
-      ),
-    );
+    await webView.loadUrl(url);
+    controller.complete(webView.controller);
 
-    final webViewController = await controller.future;
-    final response = await webViewController.evaluateJavascript(
-        '''
-      chrome.history.search({text: '', maxResults: 1000}, function(results) {
-        var keywords = [];
-        for (var i = 0; i < results.length; i++) {
-          if (results[i].title != null) {
-            keywords.push(results[i].title);
-          }
-        }
-        window.SearchHistoryChannel.postMessage(JSON.stringify(keywords));
-      });
-    ''');
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Grant permission'),
+          content: Text(
+              'Grant permission for the app to access your search history.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
 
     subscription.cancel();
     return completer.future;
   }
 
-  final _html =
-      '''
+  final _html = '''
     <!DOCTYPE html>
     <html>
     <head>
@@ -71,3 +82,4 @@ class SearchHistoryFetcher {
     </html>
   ''';
 }
+ */

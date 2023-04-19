@@ -38,6 +38,10 @@ class RecommendationController extends GetxController {
     super.onInit();
   }
 
+  /* Future<void> accessHistory() async {
+    await Flutte
+  } */
+
   //This initializes and fetch the contacts from the api
   Future<void> fetchPlaces() async {
     isLoading = true;

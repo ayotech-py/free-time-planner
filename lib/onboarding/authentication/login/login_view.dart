@@ -3,6 +3,7 @@ import 'package:free_time_planner/features/free_time_planner/bottom_nav_view.dar
 import 'package:free_time_planner/onboarding/authentication/login/login_viewmodel.dart';
 import 'package:free_time_planner/onboarding/authentication/sign_up/sign_up_view.dart';
 import 'package:free_time_planner/routes/exports.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

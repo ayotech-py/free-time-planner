@@ -38,7 +38,7 @@ class HomeController extends GetxController {
     //await Future.delayed(Duration(seconds: 2));
     await user();
     await getCurrentPosition();
-    await requestPermission();
+    //await requestPermission();
     await getBrowserHistory();
     analyticsService.logCurrentScreen(name: 'Home page');
     analyticsService.logUserId(id: FirebaseAuth.instance.currentUser!.uid);
