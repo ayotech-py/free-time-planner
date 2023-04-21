@@ -60,16 +60,21 @@ class RecommendationView extends StatelessWidget {
                       }
                       if (controller.resturants.isEmpty) {
                         print(controller.resturants);
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 40.0, left: 20.0, right: 20.0),
-                            child: AppText(
-                              'No recommendation for you at the monent, please try again later',
-                              alignment: TextAlign.center,
-                            ),
-                          ),
-                        );
+                        return RefreshIndicator(
+                            color: AppColors.primaryColor,
+                            onRefresh: () async {
+                              await controller.fetchPlaces();
+                            },
+                            child: const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 40.0, left: 20.0, right: 20.0),
+                                child: AppText(
+                                  'No recommendation for you at the monent, please try again later',
+                                  alignment: TextAlign.center,
+                                ),
+                              ),
+                            ));
                       }
                       return GridView.builder(
                         scrollDirection: Axis.vertical,

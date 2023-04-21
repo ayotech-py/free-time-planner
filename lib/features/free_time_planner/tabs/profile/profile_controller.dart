@@ -79,11 +79,19 @@ class ProfileController extends GetxController {
     isLoading = true;
     update();
     try {
+      final userinfo = await userAuth.getUserData();
+      //print(userinfo);
+
+      final country = userinfo['country'] ?? '';
+
       /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
       await Future.wait([
         placeRepo
-            .getByProvince(
-              keyword: selectedProvince.placeName,
+            .getBySearch(
+              lat: 32.323,
+              long: 23.2323,
+              type: 'tour',
+              keyword: country,
             )
             .then((value) => resturants = value)
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),

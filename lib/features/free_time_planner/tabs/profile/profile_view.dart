@@ -24,8 +24,8 @@ class ProfileView extends StatelessWidget {
           backgroundColor: Colors.white,
           body: RefreshIndicator(
             onRefresh: () async {
-              //await controller.fetchPlaces();
-              await controller.onInit();
+              await controller.fetchPlaces();
+              //await controller.onInit();
             },
             child: SafeArea(
               top: true,
