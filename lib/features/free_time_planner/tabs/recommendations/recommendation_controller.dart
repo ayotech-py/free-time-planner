@@ -57,10 +57,12 @@ class RecommendationController extends GetxController {
       final country = userinfo['country'];
       //final country = 'Montreal';
       final random = Random();
-      final search =
-          userSearch[random.nextInt(userSearch.length)]['search text'];
-
-      print(search);
+      var search = '';
+      try {
+        search = userSearch[random.nextInt(userSearch.length)]['search text'];
+      } catch (e) {
+        search = 'Museum';
+      }
 
       await Future.wait([
         placeRepo
@@ -75,10 +77,10 @@ class RecommendationController extends GetxController {
                   : searchController.text,
             )
             .then((value) => resturants = value)
-
         //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
         //chatRepo .getAllReadContacts(currentUser!.token).then((value) => allReadContactList = value)
       ]);
+      print('search tex: ${searchController.text}');
     } on Exception catch (e) {
       //This will show whenever there's issue with any of the api
       Get.snackbar(

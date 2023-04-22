@@ -82,7 +82,7 @@ class ProfileController extends GetxController {
       final userinfo = await userAuth.getUserData();
       //print(userinfo);
 
-      final country = userinfo['country'] ?? '';
+      final country = userinfo['country'] ?? 'Alberta';
 
       /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
       await Future.wait([
@@ -241,7 +241,11 @@ class ProfileController extends GetxController {
                 selectedProvince = provinces[index];
                 update();
                 Get.back();
-                await fetchPlaces();
+                await fetchProvinces();
+                /* await placeRepo.getByProvince(
+                    keyword: selectedProvince.placeName);
+                update();
+                print(selectedProvince.placeName); */
               },
               child: AppText(
                 provinces[index].placeName,
@@ -269,4 +273,35 @@ class ProfileController extends GetxController {
   }
 
   UserPosition get currentUserPosition => LocalStorage().getUserPosition();
+
+  Future<void> fetchProvinces() async {
+    isLoading = true;
+    update();
+    try {
+      /// The future await will run the funcion one after the other even if an endpoint throw an error it will continue with others.
+      await Future.wait([
+        placeRepo
+            .getByProvince(
+              keyword: selectedProvince.placeName,
+            )
+            .then((value) => resturants = value)
+        //chatRepo.getAllUnReadContacts(currentUser!.token).then((value) => allUnreadContactList = value),
+        //chatRepo .getAllReadContacts(currentUser!.token).then((value) => allReadContactList = value)
+      ]);
+    } on Exception catch (e) {
+      //This will show whenever there's issue with any of the api
+      Get.snackbar(
+        "Error",
+        'Something went wrong. Pull down to refresh',
+        dismissDirection: DismissDirection.horizontal,
+        colorText: Colors.white,
+        backgroundColor: AppColors.appRed,
+        snackPosition: SnackPosition.TOP,
+      );
+      log(e.toString());
+    } finally {
+      isLoading = false;
+      update();
+    }
+  }
 }

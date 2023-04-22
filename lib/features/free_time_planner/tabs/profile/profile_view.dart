@@ -200,13 +200,19 @@ class ProfileView extends StatelessWidget {
                         );
                       }
                       if (controller.resturants.isEmpty) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 40.0),
-                            child: AppText(
-                                'No Place Found please drag down to refresh'),
-                          ),
-                        );
+                        return Scaffold(
+                            body: RefreshIndicator(
+                                onRefresh: () async {
+                                  await controller.fetchPlaces();
+                                  //await controller.onInit();
+                                },
+                                child: const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 40.0),
+                                    child: AppText(
+                                        'No Place Found please drag down to refresh'),
+                                  ),
+                                )));
                       }
                       return GridView.builder(
                         scrollDirection: Axis.vertical,

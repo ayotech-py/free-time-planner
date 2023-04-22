@@ -59,8 +59,20 @@ class RecommendationView extends StatelessWidget {
                         );
                       }
                       if (controller.resturants.isEmpty) {
-                        print(controller.resturants);
-                        return RefreshIndicator(
+                        return Scaffold(
+                            body: RefreshIndicator(
+                                onRefresh: () async {
+                                  await controller.fetchPlaces();
+                                  //await controller.onInit();
+                                },
+                                child: const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 40.0),
+                                    child: AppText(
+                                        'No recommendation for you at the monent, please drag down to refresh'),
+                                  ),
+                                )));
+                        /* RefreshIndicator(
                             color: AppColors.primaryColor,
                             onRefresh: () async {
                               await controller.fetchPlaces();
@@ -74,7 +86,7 @@ class RecommendationView extends StatelessWidget {
                                   alignment: TextAlign.center,
                                 ),
                               ),
-                            ));
+                            )); */
                       }
                       return GridView.builder(
                         scrollDirection: Axis.vertical,
